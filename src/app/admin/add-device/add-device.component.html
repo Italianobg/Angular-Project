@@ -1,0 +1,28 @@
+<div class="content">
+    <app-admin-header></app-admin-header>
+    <div class="main">
+        <div>
+            <ul>
+                <form #f="ngForm" (ngSubmit)="addDeviceHandler(f.value)">
+                    <li class='main-form'>
+                        <div class='form'>
+                            <label for="deviceName">Device Name *</label>
+                            <input #deviceName="" type="text" />
+                            <label class="field_name">Device Short Description *</label>
+                            <textarea></textarea>
+                            <label class="field_name">Device Description *</label>
+                            <textarea></textarea>
+                            <label>Image *</label>
+                            <input type="file" />
+                            <div class='middle'>
+                                <button class="form-button" type="submit" value="Submit">Submit</button>
+                            </div>
+                        </div>
+
+                    </li>
+                </form>
+            </ul>
+        </div>
+        <!-- row-container -->
+    </div>
+</div>

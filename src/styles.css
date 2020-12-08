@@ -1,1 +1,77 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+    height: 100%;
+    border-color: white;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    background-image: url('/assets/img/background.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left top;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.middle {
+    text-align: center;
+    font-family: Carrois Gothic SC;
+}
+
+.content {
+    width: 80%;
+    position: relative;
+    background-color: #FFFFFF;
+    fill: #FFFFFF;
+    border-color: #C6C6C6;
+    color: #000000;
+    text-shadow: 1px 1px 1px #ffffff;
+    margin: 0 auto;
+}
+
+.content-header {
+    background-color: black;
+    text-align: center;
+    color: white;
+    padding-top: 1.5%;
+    padding-bottom: 1%;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.content-header ul {
+    padding: 0 4% 0 4%;
+    margin: 0;
+}
+
+.content-header h1 {
+    margin: 0;
+    font-family: Carrois Gothic SC;
+    text-shadow: 1px 1px 1px #000000;
+}
+
+.content-header p {
+    line-height: 1.625em;
+    padding-bottom: 0px;
+    font-family: Droid Sans, sans-serif;
+    font-size: 15px;
+}
+
+.error {
+    color: red
+}
+
+.success {
+    color: green
+}

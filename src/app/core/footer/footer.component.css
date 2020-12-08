@@ -1,0 +1,72 @@
+.footer {
+    margin-top: 45px;
+}
+
+.appointment {
+    padding-top: 0px;
+    background-color: #1873B8;
+    fill: #1873B8;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px #000204;
+    border-style: solid;
+    font-family: Droid Sans, sans-serif;
+    height: 53px;
+    border: none;
+}
+
+.appointment ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.appointment h3 {
+    margin: 0px;
+    font-size: 24px;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+.info {
+    font-family: Droid Sans, sans-serif;
+    font-size: 1.1vw;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.info ul {
+    margin: 0px;
+    display: flex;
+}
+
+.info>div {
+    margin-left: 4%;
+    margin-right: 4%;
+}
+
+.info li {
+    width: 45%;
+    position: relative;
+    float: left;
+    margin: 2.5%;
+    display: table-cell;
+    min-width: 140px;
+    border-color: #000000;
+    background: rgba(0, 0, 0, 0.2);
+    fill: rgba(0, 0, 0, 0.2);
+}
+
+.info li>div {
+    padding: 3%;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px #000000;
+    line-height: 1.625em;
+}
+
+.info img {
+    width: 23%;
+    padding: 1%;
+}
+
+a {
+    color: white
+}

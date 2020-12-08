@@ -1,0 +1,58 @@
+<div class="content">
+
+    <div class='main'>
+        <ul>
+            <li>
+                <div>
+                    <h1>Login</h1>
+                </div>
+            </li>
+        </ul>
+        <!-- row-container -->
+
+        <div>
+            <div>
+                <div>
+                    <ul>
+                        <li>
+                            <div>
+                                <p>
+                                    Please enter your credentials.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- row-container -->
+                </div>
+                <div>
+                    <div>
+                        <ul>
+                            <li class='main-form'>
+                                <form #f="ngForm" (ngSubmit)="loginHanlder(f.value)">
+                                    <div class='form'>
+                                        <label for="email">E-mail*</label>
+                                        <input #userEmail="ngModel" [class.input-error]="userEmail.touched && !!userEmail.errors" type="email" name="email" id="email" ngModel required email/>
+                                        <p *ngIf="userEmail.touched && userEmail.errors?.required"> Email is required! </p>
+                                        <p *ngIf="userEmail.touched && userEmail.errors?.email"> Email is not valid! </p>
+                                        <label for="password">Password *</label>
+                                        <input #userPassword="ngModel" [class.input-error]="userPassword.touched && !!userPassword.errors" type="password" name="password" id="password" ngModel required minlength="6" />
+                                        <p *ngIf="userPassword.touched && userPassword.errors?.required"> Password is required! </p>
+                                        <p *ngIf="userPassword.touched && userPassword.errors?.minlength"> Password must be at least 6 characters! </p>
+                                        <label class="middle error">{{errorMessage}}</label>
+                                        <div class='middle'>
+                                            <button [disabled]="f.invalid" class="form-button" type="submit" value="Submit">Login</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- row-container -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- row-container -->
+
+</div>

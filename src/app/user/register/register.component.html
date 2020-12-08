@@ -1,0 +1,67 @@
+<div class="content">
+
+    <div class='main'>
+        <ul>
+            <li>
+                <div>
+                    <h1>Register</h1>
+                </div>
+            </li>
+        </ul>
+        <!-- row-container -->
+
+        <div>
+            <div>
+                <div>
+                    <ul>
+                        <li>
+                            <div>
+                                <p>
+                                    Please enter your email address and password.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                    <!-- row-container -->
+                </div>
+                <div>
+                    <div>
+                        <ul>
+                            <form #f="ngForm" (ngSubmit)="registerHanlder(f.value)">
+                                <li class='main-form'>
+                                    <div class='form'>
+                                        <label for="email">E-mail*</label>
+                                        <input #userEmail="ngModel" [class.input-error]="userEmail.touched && !!userEmail.errors" type="email" name="email" id="email" ngModel required email/>
+                                        <p *ngIf="userEmail.touched && userEmail.errors?.required"> Email is required! </p>
+                                        <p *ngIf="userEmail.touched && userEmail.errors?.email"> Email is not valid! </p>
+                                        <label for="password">Password *</label>
+                                        <input #userPassword="ngModel" [class.input-error]="userPassword.touched && !!userPassword.errors" type="password" name="password" id="password" ngModel required minlength="6" />
+                                        <label for="rePassword">Repeat Password *</label>
+                                        <input #userRePassword="ngModel" [class.input-error]="userRePassword.touched && !!userRePassword.errors" type="password" name="rePassword" id="rePassword" ngModel required minlength="6" />
+
+                                        <p *ngIf="userPassword.touched && userPassword.errors?.required"> Password is required! </p>
+                                        <p *ngIf="userPassword.touched && userPassword.errors?.minlength"> Password must be at least 6 characters! </p>
+                                        <p *ngIf="userRePassword.touched && userRePassword.errors?.required"> Repeat Password is required! </p>
+                                        <p *ngIf="userRePassword.touched && userRePassword.errors?.minlength"> Repeat Password must be at least 6 characters! </p>
+                                        <p *ngIf="userRePassword.touched && userRePassword.value!==userPassword.value"> Passwords do not match! </p>
+
+                                        <label class="middle error">{{errorMessage}}</label>
+                                        <label class="middle success">{{successMessage}}</label>
+                                        <div class='middle'>
+                                            <button [disabled]="f.invalid || (userRePassword.value!==userPassword.value)" class="form-button" type="submit" value="Submit">Register</button>
+                                        </div>
+
+                                    </div>
+                                </li>
+                            </form>
+                        </ul>
+                    </div>
+                    <!-- row-container -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- row-container -->
+
+</div>

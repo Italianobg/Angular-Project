@@ -1,0 +1,48 @@
+.admin-menu {
+    background-color: white;
+    border-style: solid;
+    line-height: 40px;
+    position: relative;
+    font-family: Droid Sans, sans-serif;
+    border: none;
+    align-items: center;
+    display: flex;
+}
+
+.admin-menu ul {
+    padding: 0px;
+    display: inline-block;
+    display: flex;
+    margin: auto;
+}
+
+.admin-menu ul li {
+    padding: 0 1.2125em;
+    font-size: 0.9vw;
+    text-decoration: none;
+    color: black;
+    display: flex;
+}
+
+.admin-menu ul li:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.admin-menu ul li:hover a {
+    color: white;
+}
+
+.active {
+    background-color: #000000;
+}
+
+li.active a {
+    color: white;
+    text-shadow: none;
+}
+
+li a {
+    color: black;
+    text-shadow: none;
+}

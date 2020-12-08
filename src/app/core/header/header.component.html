@@ -1,0 +1,25 @@
+<div class="header">
+    <div class="header-container">
+        <div class='header-row'>
+            <ul>
+                <li>
+                    <div class='logo-image'><img src="http://nexus323.en.websitesexamples.com/wp-content/uploads/2014/11/logo3.png?quality=100.3019031321330" /></div>
+                </li>
+                <li>
+                    <div class='header-menu'>
+                        <ul>
+                            <li routerLinkActive="active"><a routerLink="/home">Home</a></li>
+                            <li routerLinkActive="active"><a routerLink="/devices">Devices</a></li>
+                            <li routerLinkActive="active"><a routerLink="/services">Services</a></li>
+                            <li *ngIf="isLogged && isAdmin" routerLinkActive="active"><a routerLink="/admin">Admin</a></li>
+                            <li *ngIf="isLogged" routerLinkActive="active"><a routerLink="/user/profile">Profile</a></li>
+                            <li *ngIf="!isLogged" routerLinkActive="active"><a routerLink="/user/login">Login</a></li>
+                            <li *ngIf="!isLogged" routerLinkActive="active"><a routerLink="/user/register">Register</a></li>
+                            <li *ngIf="isLogged" routerLinkActive="active"><a (click)="logoutHandler()">Logout</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

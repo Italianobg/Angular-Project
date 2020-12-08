@@ -1,0 +1,66 @@
+.header {
+    position: relative;
+}
+
+.header-container {
+    margin-bottom: 25px;
+    background-color: rgba(31, 31, 31, 0.8);
+    padding-top: 30px;
+    padding-bottom: 15px;
+}
+
+.header-row {
+    padding-left: 15%;
+    padding-right: 15%;
+    height: 60px;
+    display: block;
+}
+
+.logo-image img {
+    float: left;
+    margin-right: 15px;
+    max-height: 50px;
+}
+
+.header-menu {
+    background-color: white;
+    float: right;
+    border-style: solid;
+    line-height: 40px;
+    position: relative;
+    font-family: Droid Sans, sans-serif;
+    border: none;
+}
+
+.header-menu ul {
+    padding: 0px;
+    display: flex;
+}
+
+.header-menu ul li {
+    padding: 0 1.2125em;
+    font-size: 0.9vw;
+    text-decoration: none;
+    display: flex;
+}
+
+.header-menu ul li:hover {
+    background-color: #000000;
+    color: white;
+}
+
+.header-menu ul li:hover a {
+    color: white;
+}
+
+.active {
+    background-color: #000000;
+}
+
+li.active a {
+    color: white;
+}
+
+li a {
+    color: black;
+}

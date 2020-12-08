@@ -1,0 +1,42 @@
+.devices {
+    padding-left: 2%;
+    padding-right: 2%;
+    display: flex;
+}
+
+.devices li {
+    width: 30%;
+    border-right: 2.4vw solid transparent;
+    float: left;
+    margin-bottom: 30px;
+    font-family: Droid Sans, sans-serif;
+}
+
+.devices li>div {
+    border-width: 1px;
+    border-color: #C6C6C6;
+    border-style: solid;
+}
+
+.devices li>div>div {
+    padding: 15px;
+}
+
+.devices h3 {
+    margin: 0px;
+    opacity: 0.8;
+    font-size: 24px;
+    line-height: 1.2em;
+    color: black;
+}
+
+.stretch {
+    width: 100%;
+    height: auto;
+}
+
+.devices-description {
+    line-height: 1.625em;
+    font-size: 15px;
+    text-align: center;
+}
