@@ -1,0 +1,47 @@
+<div class="content">
+
+    <div class="content-header">
+        <ul>
+            <li>
+                <h1>Overview</h1>
+
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <p>
+                    This is the list of all devices that we are able to repair.
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="!devices" class="middle">
+        <p class="middle">No devices are available at the moment!</p>
+    </div>
+    <div class="devices">
+        <ul>
+            <li *ngFor="let device of devices">
+                <div>
+                    <div>
+                        <a [routerLink]="['/devices/details', device.payload.doc.id]">
+                            <h3 class="middle">{{device.payload.doc.data().name}}</h3>
+                        </a>
+                        <div class="padding5"></div>
+                        <img src={{device.payload.doc.data().imageUrl}} alt="" title="" class="stretch" />
+                        <div class=" padding5 "></div>
+                        <div class="devices-description ">
+                            <p>
+                                <a [routerLink]="['/devices/details', device.payload.doc.id]">
+                                    {{device.payload.doc.data().shortDescription}}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <!-- row-container -->
+    </div>
+
+</div>

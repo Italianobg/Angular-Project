@@ -4,22 +4,32 @@
     <div class="main">
         <div>
             <ul>
-                <li class='main-form'>
+                <form #serviceF="ngForm" (ngSubmit)="addServiceHandler(serviceF.value)">
+                    <li class='main-form'>
 
-                    <div class='form'>
-                        <label>Service Name *</label>
-                        <input type="text" />
-                        <label class="field_name">Service Description *</label>
-                        <textarea></textarea>
-                        <label>Image *</label>
-                        <input type="file" />
-                        <div class='middle'>
-                            <button class="form-button" type="submit" value="Submit">Submit</button>
+                        <div class='form'>
+                            <label for="name">Service Name *</label>
+                            <input #serviceName="ngModel" [class.input-error]="serviceName.touched && !!serviceName.errors" type="name" name="name" id="name" ngModel required minlength="5" />
+                            <p *ngIf="serviceName.touched && serviceName.errors?.required"> Service name is required! </p>
+                            <p *ngIf="serviceName.touched && serviceName.errors?.minlength"> Service name should be at least 5 characters! </p>
+
+
+                            <label for="description" class="field_name">Service Description *</label>
+                            <textarea #serviceDescription="ngModel" [class.input-error]="serviceDescription.touched && !!serviceDescription.errors" type="description" name="description" id="description" ngModel required maxlength="1000"></textarea>
+                            <p *ngIf="serviceDescription.touched && serviceDescription.errors?.required"> Service description is required! </p>
+                            <p *ngIf="serviceDescription.touched && serviceDescription.errors?.maxlength"> Service description is too long! </p>
+
+                            <label>Image</label>
+                            <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+
+                            <label class="middle error">{{errorMessage}}</label>
+                            <label class="middle success">{{successMessage}}</label>
+                            <div class='middle'>
+                                <button class="form-button" type="submit" value="Submit">Submit</button>
+                            </div>
                         </div>
-                    </div>
-
-
-                </li>
+                    </li>
+                </form>
             </ul>
         </div>
         <!-- row-container -->

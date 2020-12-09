@@ -3,19 +3,31 @@
     <div class="main">
         <div>
             <ul>
-                <form #f="ngForm" (ngSubmit)="addDeviceHandler(f.value)">
+                <form #deviceF="ngForm" (ngSubmit)="addDeviceHandler(deviceF.value)">
                     <li class='main-form'>
                         <div class='form'>
-                            <label for="deviceName">Device Name *</label>
-                            <input #deviceName="" type="text" />
-                            <label class="field_name">Device Short Description *</label>
-                            <textarea></textarea>
-                            <label class="field_name">Device Description *</label>
-                            <textarea></textarea>
-                            <label>Image *</label>
-                            <input type="file" />
+                            <label for="name">Device Name *</label>
+                            <input #deviceName="ngModel" [class.input-error]="deviceName.touched && !!deviceName.errors" type="name" name="name" id="name" ngModel required minlength="5" />
+                            <p *ngIf="deviceName.touched && deviceName.errors?.required"> Device name is required! </p>
+                            <p *ngIf="deviceName.touched && deviceName.errors?.minlength"> Device name should be at least 5 characters! </p>
+
+                            <label for="shortDescription" class="field_name">Device Short Description *</label>
+                            <textarea #deviceShortDescription="ngModel" [class.input-error]="deviceShortDescription.touched && !!deviceShortDescription.errors" type="shortDescription" name="shortDescription" id="shortDescription" ngModel required maxlength="100"></textarea>
+                            <p *ngIf="deviceShortDescription.touched && deviceShortDescription.errors?.required"> Device short description is required! </p>
+                            <p *ngIf="deviceShortDescription.touched && deviceShortDescription.errors?.maxlength"> Device short description is too long! </p>
+
+                            <label for="description" class="field_name">Device Description *</label>
+                            <textarea #deviceDescrption="ngModel" [class.input-error]="deviceDescrption.touched && !!deviceDescrption.errors" type="description" name="description" id="description" ngModel required maxlength="1000"></textarea>
+                            <p *ngIf="deviceDescrption.touched && deviceDescrption.errors?.required"> Device description is required! </p>
+                            <p *ngIf="deviceDescrption.touched && deviceDescrption.errors?.maxlength"> Device description is too long! </p>
+
+                            <label>Image</label>
+                            <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+
+                            <label class="middle error">{{errorMessage}}</label>
+                            <label class="middle success">{{successMessage}}</label>
                             <div class='middle'>
-                                <button class="form-button" type="submit" value="Submit">Submit</button>
+                                <button class="form-button " type="submit " value="Submit ">Submit</button>
                             </div>
                         </div>
 

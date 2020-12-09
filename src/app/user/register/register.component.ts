@@ -22,11 +22,9 @@ export class RegisterComponent implements OnInit {
   }
 
   registerHanlder(formData) {
-    console.log(formData);
     
     this.userService.doRegister(formData)
     .then(res => {
-      console.log(res);
       this.errorMessage = "";
       this.successMessage = "Your account has been created";
       this.userService.createUser(formData);

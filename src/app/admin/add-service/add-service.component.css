@@ -86,7 +86,6 @@
 .form textarea {
     box-shadow: 0px 0px 0px 1px grey inset;
     height: 100px;
-    line-height: 30px;
     text-indent: 10px;
     margin-bottom: 10px;
     font-size: 15px;

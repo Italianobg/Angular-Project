@@ -9,11 +9,11 @@ import { FooterComponent } from './core/footer/footer.component';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
-import { NotFoundComponent } from './not-found/not-found.component';
 import { UserModule } from './user/user.module';
 import { AdminModule } from './admin/admin.module';
-import { DevicesComponent } from './devices/devices.component';
-import { ServicesComponent } from './services/services.component';
+import { DevicesModule } from './devices/devices.module';
+import { ServicesModule } from './services/services.module';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { RepairRequestComponent } from './repair-request/repair-request.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore'
@@ -25,8 +25,6 @@ import { environment } from 'src/environments/environment';
     AppComponent,
     HomeComponent,
     NotFoundComponent,
-    DevicesComponent,
-    ServicesComponent,
     RepairRequestComponent,
   ],
   imports: [
@@ -35,6 +33,8 @@ import { environment } from 'src/environments/environment';
     CoreModule,
     UserModule,
     AdminModule,
+    DevicesModule,
+    ServicesModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule 

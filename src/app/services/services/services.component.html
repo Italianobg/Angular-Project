@@ -1,0 +1,48 @@
+<div class="content">
+    <div class="content-header">
+        <ul>
+            <li>
+                <h1>Overview</h1>
+
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <p>
+                    We are able to provide you the following list of services.
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="!services" class="middle">
+        <p class="middle">No services are available at this point!</p>
+    </div>
+    <div class="content-repairs">
+        <div>
+            <ul>
+                <li *ngFor="let service of services">
+                    <div class="services">
+                        <img class="service-image" src="{{service.payload.doc.data().imageUrl}}">
+                        <div class="services-content">
+                            <div>
+                                <h5 class="service-title">{{service.payload.doc.data().name}}</h5>
+                            </div>
+                            <div class="padding-bottom10"></div>
+                            <div class="service-description">
+                                <p>{{service.payload.doc.data().description}}</p>
+                            </div>
+                            <div class=buttons>
+                                <div *ngIf="isAdmin" class='middle'>
+                                    <button [routerLink]="['/services/edit', service.payload.doc.id]" class="form-button" type="submit" value="Submit">Edit</button>
+                                    <button (click)="deleteServiceHandler(service.payload.doc.id)" class="form-button" type="submit" value="Submit">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+        <!-- row-container -->
+    </div>
+</div>

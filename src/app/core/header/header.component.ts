@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -22,7 +21,15 @@ export class HeaderComponent implements OnInit {
   get isAdmin(): boolean{
     return this.userService.isAdmin;
   }
+
+  logoutHandler(): void {
+    this.userService.doLogout();
+    this.router.navigate(['']);
+  }
+
   ngOnInit(): void {
   }
+
+  
 
 }
