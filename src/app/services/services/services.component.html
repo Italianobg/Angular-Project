@@ -14,6 +14,7 @@
             </li>
         </ul>
     </div>
+
     <div *ngIf="!services" class="middle">
         <p class="middle">No services are available at this point!</p>
     </div>
@@ -22,7 +23,7 @@
             <ul>
                 <li *ngFor="let service of services">
                     <div class="services">
-                        <img class="service-image" src="{{service.payload.doc.data().imageUrl}}">
+                        <img class="service-image" src="{{service.payload.doc.data().imageUrl}}" onerror="this.style.display='block'">
                         <div class="services-content">
                             <div>
                                 <h5 class="service-title">{{service.payload.doc.data().name}}</h5>
@@ -34,13 +35,12 @@
                             <div class=buttons>
                                 <div *ngIf="isAdmin" class='middle'>
                                     <button [routerLink]="['/services/edit', service.payload.doc.id]" class="form-button" type="submit" value="Submit">Edit</button>
-                                    <button (click)="deleteServiceHandler(service.payload.doc.id)" class="form-button" type="submit" value="Submit">Delete</button>
+                                    <button (click)="deleteServiceHandler(service.payload.doc.id, service.payload.doc.data().imageUrl)" class="form-button" type="submit" value="Submit">Delete</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </li>
-
             </ul>
         </div>
         <!-- row-container -->

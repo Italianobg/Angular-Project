@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { finalize } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { AdminService } from '../admin.service';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-add-service',
   templateUrl: './add-service.component.html',
-  styleUrls: ['../../../form-style.css','./add-service.component.css']
+  styleUrls: ['../../../form-style.css', './add-service.component.css'],
 })
 export class AddServiceComponent implements OnInit {
-
+  serviceDetails;
   selectedFile: File = null;
   fb;
   downloadURL: Observable<string>;
@@ -23,9 +23,10 @@ export class AddServiceComponent implements OnInit {
     private router: Router,
     private storage: AngularFireStorage,
     private adminService: AdminService
-    ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.serviceDetails = this.serviceDetails ? this.serviceDetails : {};
   }
 
   onFileSelected(event) {
@@ -39,33 +40,38 @@ export class AddServiceComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.downloadURL = fileRef.getDownloadURL();
-          this.downloadURL.subscribe(url => {
+          this.downloadURL.subscribe((url) => {
             if (url) {
               this.fb = url;
+              this.serviceDetails['imageUrl'] = url;
             }
-            console.log(this.fb);
           });
         })
       )
-      .subscribe(url => {
+      .subscribe((url) => {
         if (url) {
-          console.log(url);
         }
       });
   }
 
-  addServiceHandler(formData){
-    formData['imageUrl']= this.fb? this.fb : '';
-    this.adminService.addService(formData)
-    .then(res => {
-      this.errorMessage = "";
-      this.successMessage = "Service has been added successfully!";
-      this.router.navigate(['/services']);
-    }, err => {
-      console.log(err);
-      this.errorMessage = err.message;
-      this.successMessage = "";
-    })
+  deleteImage() {
+    this.storage.refFromURL(this.serviceDetails.imageUrl).delete();
+    return (this.serviceDetails.imageUrl = '');
+  }
 
+  addServiceHandler(formData) {
+    formData['imageUrl'] = this.fb ? this.fb : '';
+    this.adminService.addService(formData).then(
+      (res) => {
+        this.errorMessage = '';
+        this.successMessage = 'Service has been added successfully!';
+        this.router.navigate(['/services']);
+      },
+      (err) => {
+        console.log(err);
+        this.errorMessage = err.message;
+        this.successMessage = '';
+      }
+    );
   }
 }

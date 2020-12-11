@@ -167,7 +167,7 @@
     <div class=buttons>
         <div *ngIf="isAdmin" class='middle'>
             <button [routerLink]="['/devices/edit', deviceDetails.id]" class="form-button " type="submit " value="Submit ">Edit</button>
-            <button (click)="deleteDeviceHandler(deviceDetails.id)" class="form-button " type="submit " value="Submit ">Delete</button>
+            <button (click)="deleteDeviceHandler(deviceDetails.id, deviceDetails.imageUrl)" class="form-button " type="submit " value="Submit ">Delete</button>
         </div>
     </div>
 </div>

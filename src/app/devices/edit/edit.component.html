@@ -20,73 +20,71 @@
             <ul>
                 <form #deviceF="ngForm" (ngSubmit)="editDeviceHandler(deviceF.value)">
                     <li class='main-form'>
-
                         <div class='form'>
-                            <label>Device Name *</label>
-                            <input type="text" />
-                            <label class="field_name">Device Short Description *</label>
-                            <textarea></textarea>
-                            <label class="field_name">Device Description *</label>
-                            <textarea></textarea>
-                            <label>Image *</label>
-                            <input type="file" />
+                            <label for="name" class="field_name">Device Name *</label>
+                            <input #deviceName="ngModel" [class.input-error]="deviceName.touched && !!deviceName.errors" type="name" name="name" id="name" [(ngModel)]="deviceDetails.name" required minlength="5" />
+                            <p *ngIf="deviceName.touched && deviceName.errors?.required"> Device name is required! </p>
+                            <p *ngIf="deviceName.touched && deviceName.errors?.minlength"> Device name should be at least 5 characters! </p>
+
+                            <label for="shortDescription" class="field_name">Device Short Description *</label>
+                            <textarea #deviceShortDescription="ngModel" [class.input-error]="deviceShortDescription.touched && !!deviceShortDescription.errors" type="shortDescription" name="shortDescription" id="shortDescription" [(ngModel)]="deviceDetails.shortDescription" required
+                                maxlength="100"></textarea>
+                            <p *ngIf="deviceShortDescription.touched && deviceShortDescription.errors?.required"> Device short description is required! </p>
+                            <p *ngIf="deviceShortDescription.touched && deviceShortDescription.errors?.maxlength"> Device short description is too long! </p>
+
+                            <label for="description" class="field_name">Device Description *</label>
+                            <textarea #deviceDescrption="ngModel" [class.input-error]="deviceDescrption.touched && !!deviceDescrption.errors" type="description" name="description" id="description" [(ngModel)]="deviceDetails.description" required maxlength="1000"></textarea>
+                            <p *ngIf="deviceDescrption.touched && deviceDescrption.errors?.required"> Device description is required! </p>
+                            <p *ngIf="deviceDescrption.touched && deviceDescrption.errors?.maxlength"> Device description is too long! </p>
+
+                            <label>Image</label>
+                            <div *ngIf="deviceDetails.imageUrl">
+                                <div class="middle">
+                                    <button class="form-button" type="submit" value="Submit" (click)="deleteImage()">Delete Image</button>
+                                </div>
+                                <div class="margin-bottom10"></div>
+                                <div class="middle">
+                                    <img src="{{deviceDetails.imageUrl}}" />
+                                </div>
+                            </div>
+
+                            <div *ngIf="!deviceDetails.imageUrl">
+                                <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+                            </div>
+
+                            <div class='middle'>
+                                <button [disabled]="deviceF.invalid" class="form-button" type="submit" value="Submit">Edit Device </button>
+                            </div>
+
+                            <div class='middle margin-top20'>
+                                Assign / Edit / Delete Services
+                            </div>
                             <div class="form-services">
 
                                 <label>Services*</label>
-                                <div>
-                                    <select>
-
-                                                        <option value="- select a service -">- select a service -</option>
-                                                                <option value="Screen replacement">Screen replacement</option>
-                                                                <option value="Battery replacement">Battery replacement</option>
-                                                                <option value="Charging dock replacement">Charging dock replacement</option>
-                                                                <option value="Headphone jack replacement">Headphone jack replacement</option>
-                                                                <option value="Camera replacement">Camera replacement</option>
-                                                                <option value="Frame replacement">Frame replacement</option>
-                                                                <option value="Back glass replacement">Back glass replacement</option>
-                                                                <option value="Power button replacement">Power button replacement</option>
-                                                    </select>
-                                    <input type="text" value="" placeholder="Price" /> <button class="form-services-button" type="submit" value="Submit">Remove</button>
+                                <div *ngFor="let linkedService of deviceDetails.linkedServices" class="list-services">
+                                    <input type="text" disabled value="{{linkedService.name}}" />
+                                    <input type="text" value="{{linkedService.price}}" placeholder="price" disabled />
+                                    <button class="form-services-button" type="button" value="Submit" (click)="deleteAssignedService(deviceDetails.id, linkedService.service, linkedService.price)">Remove</button>
                                 </div>
-                                <div>
-                                    <select>
 
-                                                        <option value="- select a service -">- select a service -</option>
-                                                                <option value="Screen replacement">Screen replacement</option>
-                                                                <option value="Battery replacement">Battery replacement</option>
-                                                                <option value="Charging dock replacement">Charging dock replacement</option>
-                                                                <option value="Headphone jack replacement">Headphone jack replacement</option>
-                                                                <option value="Camera replacement">Camera replacement</option>
-                                                                <option value="Frame replacement">Frame replacement</option>
-                                                                <option value="Back glass replacement">Back glass replacement</option>
-                                                                <option value="Power button replacement">Power button replacement</option>
-                                                    </select>
-                                    <input type="text" value="" placeholder="Price" /> <button class="form-services-button" type="submit" value="Submit">Remove</button>
-                                </div>
-                                <div>
-                                    <select>
-
-                                                        <option value="- select a service -">- select a service -</option>
-                                                                <option value="Screen replacement">Screen replacement</option>
-                                                                <option value="Battery replacement">Battery replacement</option>
-                                                                <option value="Charging dock replacement">Charging dock replacement</option>
-                                                                <option value="Headphone jack replacement">Headphone jack replacement</option>
-                                                                <option value="Camera replacement">Camera replacement</option>
-                                                                <option value="Frame replacement">Frame replacement</option>
-                                                                <option value="Back glass replacement">Back glass replacement</option>
-                                                                <option value="Power button replacement">Power button replacement</option>
-                                                    </select>
-                                    <input type="text" value="" placeholder="Price" /> <button class="form-services-button" type="submit" value="Submit">Add</button>
+                                <div class="assign-service">
+                                    <form #serviceF="ngForm">
+                                        <select name="service" ngModel required>
+                                            <option value="" disabled selected>Choose service to assign</option>
+                                            <option *ngFor="let service of services" [ngValue]="service">
+                                                {{ service.data.name }}
+                                            </option>
+                                        </select>
+                                        <input #servicePrice="ngModel" [class.input-error]="servicePrice.touched && !!servicePrice.errors" type="number" name="price" id="price" ngModel required placeholder="price" />
+                                        <button [disabled]="serviceF.invalid" class="form-services-button" type="submit" value="Submit" (click)="assignService(serviceF.value.service.id, serviceF.value.price); serviceF.reset()">Add</button>
+                                    </form>
                                 </div>
                             </div>
 
 
-                            <div class='middle'>
-                                <button class="form-button" type="submit" value="Submit">Edit</button>
-                            </div>
+
                         </div>
-
-
                     </li>
                 </form>
             </ul>

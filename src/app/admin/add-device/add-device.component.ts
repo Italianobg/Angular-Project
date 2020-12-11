@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireStorage } from "@angular/fire/storage";
-import { finalize } from "rxjs/operators";
-import { Observable } from "rxjs";
+import { AngularFireStorage } from '@angular/fire/storage';
+import { finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { AdminService } from '../admin.service';
-
 
 @Component({
   selector: 'app-add-device',
   templateUrl: './add-device.component.html',
-  styleUrls: ['../../../form-style.css', './add-device.component.css']
+  styleUrls: ['../../../form-style.css', './add-device.component.css'],
 })
 export class AddDeviceComponent implements OnInit {
-
+  deviceDetails;
   selectedFile: File = null;
   fb;
   downloadURL: Observable<string>;
@@ -24,9 +23,10 @@ export class AddDeviceComponent implements OnInit {
     private router: Router,
     private storage: AngularFireStorage,
     private adminService: AdminService
-    ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.deviceDetails = this.deviceDetails ? this.deviceDetails : {};
   }
 
   onFileSelected(event) {
@@ -40,32 +40,38 @@ export class AddDeviceComponent implements OnInit {
       .pipe(
         finalize(() => {
           this.downloadURL = fileRef.getDownloadURL();
-          this.downloadURL.subscribe(url => {
+          this.downloadURL.subscribe((url) => {
             if (url) {
               this.fb = url;
+              this.deviceDetails['imageUrl'] = url;
             }
-            console.log(this.fb);
           });
         })
       )
-      .subscribe(url => {
+      .subscribe((url) => {
         if (url) {
-          console.log(url);
         }
       });
   }
 
-  addDeviceHandler(formData){
-    formData['imageUrl']= this.fb;
-    this.adminService.addDevice(formData)
-    .then(res => {
-      this.errorMessage = "";
-      this.successMessage = "Device has been added successfully!";
-      this.router.navigate(['/devices']);
-    }, err => {
-      console.log(err);
-      this.errorMessage = err.message;
-      this.successMessage = "";
-    })
+  addDeviceHandler(formData) {
+    formData['imageUrl'] = this.fb;
+    this.adminService.addDevice(formData).then(
+      (res) => {
+        this.errorMessage = '';
+        this.successMessage = 'Device has been added successfully!';
+        this.router.navigate(['/devices']);
+      },
+      (err) => {
+        console.log(err);
+        this.errorMessage = err.message;
+        this.successMessage = '';
+      }
+    );
+  }
+
+  deleteImage() {
+    this.storage.refFromURL(this.deviceDetails.imageUrl).delete();
+    return (this.deviceDetails.imageUrl = '');
   }
 }

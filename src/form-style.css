@@ -139,3 +139,33 @@
 :disabled {
     background: rgba(0, 0, 0, 0.1);
 }
+
+.list-services {
+    width: 100%;
+    padding: 0%;
+}
+
+.list-services>input:first-of-type {
+    margin-left: 0;
+    margin-right: 2%;
+    width: 80%;
+}
+
+.list-services>input:nth-child(2) {
+    margin-left: 0;
+    margin-right: 2%;
+}
+
+.assign-service button {
+    float: right;
+    margin: 0;
+    height: 36px;
+}
+
+.assign-service input {
+    width: 15%;
+}
+
+.assign-service select {
+    width: 60%;
+}

@@ -1,0 +1,37 @@
+.main {
+    font-family: Droid Sans, sans-serif;
+    margin: 0 20% 0 20%;
+    padding-bottom: 3%;
+    padding-top: 1.5%;
+}
+
+.main ul {
+    padding: 0px;
+}
+
+.main h1 {
+    font-family: Carrois Gothic SC;
+    font-weight: 300;
+    margin: 0;
+    text-align: center;
+}
+
+.main p {
+    line-height: 1.625em;
+    text-align: center;
+}
+
+.main-form {
+    padding: 3% 15% 3% 15%;
+    background-color: gray;
+    background: rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.margin-bottom10 {
+    margin-bottom: 10px !important;
+}
+
+.margin-top20 {
+    margin-top: 20px !important;
+}

@@ -2,23 +2,28 @@
     display: flex;
 }
 
+.content-repairs div {
+    width: 100%;
+}
+
 .content-repairs ul {
-    padding-left: 2%;
-    padding-right: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+    width: 96%;
+    padding: 0;
 }
 
 .content-repairs li {
     width: 23%;
     float: left;
     margin-bottom: 30px;
-    fill: gray;
+    background-color: #F2F2F2;
     margin-left: 1%;
     margin-right: 1%;
 }
 
 .services {
-    padding: 15px;
-    background-color: #F2F2F2;
+    padding: 5% 0;
 }
 
 .service-image {

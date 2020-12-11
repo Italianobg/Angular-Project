@@ -4,6 +4,10 @@
     display: flex;
 }
 
+.devices ul {
+    width: 100%;
+}
+
 .devices ul li {
     width: 30%;
     border-right: 2.4vw solid transparent;

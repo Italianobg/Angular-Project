@@ -20,7 +20,20 @@
                             <p *ngIf="serviceDescription.touched && serviceDescription.errors?.maxlength"> Service description is too long! </p>
 
                             <label>Image</label>
-                            <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+                            <div *ngIf="serviceDetails.imageUrl">
+                                <div class="middle">
+                                    <button class="form-button" type="submit" value="Submit" (click)="deleteImage()">Delete Image</button>
+                                </div>
+                                <div class="margin-bottom10"></div>
+                                <div class="middle">
+                                    <img src="{{serviceDetails.imageUrl}}" />
+                                </div>
+                            </div>
+
+                            <div *ngIf="!serviceDetails.imageUrl">
+                                <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+                            </div>
+
 
                             <label class="middle error">{{errorMessage}}</label>
                             <label class="middle success">{{successMessage}}</label>
