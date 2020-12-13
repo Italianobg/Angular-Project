@@ -8,18 +8,9 @@ import { UserRoutingModule } from './user-routing.module';
 import { FormsModule } from '@angular/forms';
 import { UserService } from './user.service';
 
-
-
 @NgModule({
   declarations: [LoginComponent, RegisterComponent, ProfileComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    UserRoutingModule,
-    FormsModule
-  ],
-  providers: [
-    UserService
-  ]
+  imports: [CommonModule, SharedModule, UserRoutingModule, FormsModule],
+  providers: [UserService],
 })
-export class UserModule { }
+export class UserModule {}

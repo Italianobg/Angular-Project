@@ -6,26 +6,20 @@ import { AddDeviceComponent } from './add-device/add-device.component';
 import { EditUsersComponent } from './edit-users/edit-users.component';
 import { RepairRequestsComponent } from './repair-requests/repair-requests.component';
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
-import { AdminRoutingModule } from './admin-routing.module'
+import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AdminService } from './admin.service';
-
+import { RepairRequestComponent } from '../repair-request/repair-request.component';
 
 @NgModule({
   declarations: [
     AddServiceComponent,
     AddDeviceComponent,
     EditUsersComponent,
-    RepairRequestsComponent, 
-    AdminHeaderComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    AdminRoutingModule,
-    FormsModule
+    RepairRequestsComponent,
+    AdminHeaderComponent,
   ],
-  providers: [
-    AdminService
-  ]
+  imports: [CommonModule, SharedModule, AdminRoutingModule, FormsModule],
+  providers: [AdminService],
 })
-export class AdminModule { }
+export class AdminModule {}

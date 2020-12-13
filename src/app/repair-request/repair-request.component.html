@@ -17,9 +17,7 @@
                         <li>
                             <div>
                                 <p>
-                                    Morbi nibh dolor, pretium id enim sit amet, sollicitudin egestas libero. Praesent tempus nisl sit amet neque congue, quis sollicitudin tortor imperdiet. Pellentesque vestibulum nisl vel vulputate posuere. Quisque porta a augue sit amet ultrices. Sed eros
-                                    eros, condimentum in urna vel, cursus commodo mauris. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris ac tortor sodales, vestibulum orci sit amet, facilisis nisl.
-                                    Maecenas eleifend in mauris vitae euismod. Phasellus consequat vestibulum quam.
+                                    Please fill in the form, write down the generated number send the phone to the address. We will get back to you as soon as possible.
                                 </p>
                             </div>
                         </li>
@@ -29,42 +27,53 @@
                 <div>
                     <div>
                         <ul>
-                            <li class='main-form'>
+                            <form #requestF="ngForm" (ngSubmit)="repairRequest(requestF.value)">
+                                <li class='main-form'>
 
-                                <div class='form'> <label>Name *</label>
-                                    <input type="text" />
-                                    <label>E-mail*</label>
-                                    <input type="email" />
-                                    <label>Subject *</label>
-                                    <input type="text" />
+                                    <div class='form'>
 
-                                    <label>Device*</label>
-                                    <select>
-                                        <option value="- select your device - ">- select your device - </option>                      
-                                    </select>
+                                        <label for="name" class="field_name"> Name *</label>
+                                        <input #name="ngModel" [class.input-error]="name.touched && !!name.errors" type="name" name="name" id="name" ngModel required />
+                                        <p *ngIf="name.touched && name.errors?.required"> Name is required! </p>
 
-                                    <label>Service*</label>
-                                    <select>
+                                        <label for="email" class="field_name">E-mail *</label>
+                                        <input #email="ngModel" type="email" name="email" id="email" [(ngModel)]="currentUser.email" disabled/>
 
-                                                        <option value="- select a service -">- select a service -</option>
-                                                                <option value="Screen replacement">Screen replacement</option>
-                                                                <option value="Battery replacement">Battery replacement</option>
-                                                                <option value="Charging dock replacement">Charging dock replacement</option>
-                                                                <option value="Headphone jack replacement">Headphone jack replacement</option>
-                                                                <option value="Camera replacement">Camera replacement</option>
-                                                                <option value="Frame replacement">Frame replacement</option>
-                                                                <option value="Back glass replacement">Back glass replacement</option>
-                                                                <option value="Power button replacement">Power button replacement</option>
-                                                    </select>
-                                    <label class="field_name">Message *</label>
-                                    <textarea></textarea>
-                                    <div class='middle'>
-                                        <button class="form-button" type="submit" value="Submit">Submit</button>
+                                        <label for="subject" class="field_name">Subject *</label>
+                                        <input #subject="ngModel" [class.input-error]="subject.touched && !!subject.errors" type="subject" name="subject" id="subject" ngModel required minlength="5" />
+                                        <p *ngIf="subject.touched && subject.errors?.required"> Subject is required! </p>
+                                        <p *ngIf="subject.touched && subject.errors?.minlength"> Subject should be at least 5 characters! </p>
+
+                                        <label>Device *</label>
+                                        <select ngModel (ngModelChange)="selectedDeviceHandler($event)" name="sDevice" required>
+                                            <option value="" disabled selected>Choose your device!</option>
+                                            <option *ngFor="let device of devices" [value]="device.id" >
+                                                {{device.data.name }}
+                                            </option>                    
+                                        </select>
+
+                                        <label>Service *</label>
+                                        <select ngModel (ngModelChange)="selectedServiceHandler($event)" name="sService" required>
+                                            <option value="" disabled selected>Choose required service!</option>
+                                            <option *ngFor="let service of currentServices" [value]="service.service" >
+                                                {{ service.name }}
+                                            </option>                    
+                                        </select>
+
+                                        <label for="message" class="field_name">Message *</label>
+                                        <textarea #message="ngModel" [class.input-error]="message.touched && !!message.errors" type="message" name="message" id="message" ngModel required maxlength="1000"></textarea>
+                                        <p *ngIf="message.touched && message.errors?.required"> Device description is required! </p>
+                                        <p *ngIf="message.touched && message.errors?.maxlength"> Device description is too long! </p>
+
+
+                                        <div class='middle'>
+                                            <button [disabled]="requestF.invalid" class="form-button" type="submit" value="Submit"> Submit Repair Request </button>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                            </li>
+                                </li>
+                            </form>
                         </ul>
                     </div>
                     <!-- row-container -->

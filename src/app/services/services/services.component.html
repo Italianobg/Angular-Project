@@ -19,7 +19,7 @@
         <p class="middle">No services are available at this point!</p>
     </div>
     <div class="content-repairs">
-        <div>
+        <div *ngIf="services">
             <ul>
                 <li *ngFor="let service of services">
                     <div class="services">

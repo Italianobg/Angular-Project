@@ -6,38 +6,38 @@ import { ProfileComponent } from './profile/profile.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
-    {
-        path: 'user',
-        canActivateChild: [AuthGuard],
-        children: [
-            {
-                path: 'register',
-                component: RegisterComponent,
-                data:{
-                    isLogged: false,
-                    isAdmin: false,
-                    title: "Register User"
-                },
-            },
-            {
-                path: 'login',
-                component: LoginComponent,
-                data: {
-                    isLogged: false,
-                    isAdmin: false,
-                    title: "User Login"
-                },
-            },
-            {
-                path: 'profile',
-                component: ProfileComponent,
-                data: {
-                    isLogged: true,
-                    title: 'User Profile'
-                },
-            }
-        ]
-    }
+  {
+    path: 'user',
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: 'register',
+        component: RegisterComponent,
+        data: {
+          isLogged: false,
+          isAdmin: false,
+          title: 'Register User',
+        },
+      },
+      {
+        path: 'login',
+        component: LoginComponent,
+        data: {
+          isLogged: false,
+          isAdmin: false,
+          title: 'User Login',
+        },
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
+        data: {
+          isLogged: true,
+          title: 'User Profile',
+        },
+      },
+    ],
+  },
 ];
 
 export const UserRoutingModule = RouterModule.forChild(routes);

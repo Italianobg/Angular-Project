@@ -81,6 +81,11 @@
     display: flex;
 }
 
+.popular ul {
+    padding: 0;
+    width: 100%;
+}
+
 .middle {
     text-align: center;
     font-family: Carrois Gothic SC;
@@ -125,7 +130,11 @@
     display: flex;
 }
 
-.devices li {
+.devices ul {
+    width: 100%;
+}
+
+.devices ul li {
     width: 30%;
     border-right: 2.4vw solid transparent;
     float: left;
@@ -133,13 +142,14 @@
     font-family: Droid Sans, sans-serif;
 }
 
-.devices li>div {
+.devices ul li>div {
     border-width: 1px;
     border-color: #C6C6C6;
     border-style: solid;
+    height: 300px;
 }
 
-.devices li>div>div {
+.devices ul li>div>div {
     padding: 15px;
 }
 
@@ -153,13 +163,19 @@
 
 .stretch {
     width: 100%;
-    height: auto;
+    height: 70%;
+    max-height: 150px;
+    object-fit: contain;
 }
 
 .devices-description {
     line-height: 1.625em;
     font-size: 15px;
     text-align: center;
+}
+
+.devices-description p a {
+    color: black;
 }
 
 .all-devices {

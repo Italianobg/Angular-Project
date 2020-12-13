@@ -29,133 +29,24 @@
         <!-- nxs-row-container -->
     </div>
 
-    <div class="content-repairs ">
+    <div *ngIf="!deviceDetails.linkedServices" class="middle">
+        <p class="middle">No services are available at this point!</p>
+    </div>
+
+    <div class="content-repairs">
         <div>
             <ul>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
+                <li *ngFor="let service of deviceDetails.linkedServices">
+                    <div class="services">
+                        <img class="service-image" src="{{service.imageUrl}}" onerror="this.style.display='block'">
+                        <div class="services-content">
                             <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Screen Replacement</h5>
-                                </a>
+                                <h5 class="service-title">{{service.name}}</h5>
                             </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Battery Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Charging Dock Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Phone Jack Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Camera Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Frame Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Back Glass Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est.</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="services ">
-                        <a class="service-image " target="_self " href="# "><img src="https://www.flaticon.com/premium-icon/icons/svg/62/62027.svg "></a>
-                        <div class="services-content ">
-                            <div>
-                                <a target="_self " href="# ">
-                                    <h5 class="service-title ">Power Button Replacement</h5>
-                                </a>
-                            </div>
-                            <div class="padding-bottom10 "></div>
-                            <div class="service-description ">
-                                <p><b>45 BGN</b></p>
+                            <div class="padding-bottom10"></div>
+                            <div class="service-description">
+                                <p>{{service.description}}</p>
+                                <p class="price">{{service.price}} BGN</p>
                             </div>
                         </div>
                     </div>
@@ -164,6 +55,7 @@
         </div>
         <!-- row-container -->
     </div>
+
     <div class=buttons>
         <div *ngIf="isAdmin" class='middle'>
             <button [routerLink]="['/devices/edit', deviceDetails.id]" class="form-button " type="submit " value="Submit ">Edit</button>

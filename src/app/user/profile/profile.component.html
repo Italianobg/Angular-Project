@@ -1,1 +1,40 @@
-<p>profile works!</p>
+<div class="content">
+
+    <div class="content-header">
+        <ul>
+            <li>
+                <h1>Profile</h1>
+
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <p>
+                    This is the list of all repair requests that you opened.
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div *ngIf="!requests" class="middle">
+        <p class="middle">No repair request are made so far!</p>
+    </div>
+    <div class="requests">
+        <ul>
+            <li *ngFor="let request of requests">
+                <div>
+                    <div>
+                        <h3 class="middle"> {{request.data.subject}} </h3>
+                        <h5 class="middle">Device: {{request.data.device}} </h5>
+                        <h5 class="middle">Service: {{request.data.service}} </h5>
+                        <div class="devices-description">
+                            <p class='message'> {{request.data.message}} </p>
+                        </div>
+                        <h5 class="middle">Requestor: {{request.data.name}} </h5>
+                        <h5 class="middle">Status: {{request.data.status}} </h5>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <!-- row-container -->
+    </div>
+</div>

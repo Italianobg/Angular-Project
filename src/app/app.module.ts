@@ -16,9 +16,10 @@ import { ServicesModule } from './services/services.module';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RepairRequestComponent } from './repair-request/repair-request.component';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore'
-import { AngularFireAuthModule } from '@angular/fire/auth'
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,13 +38,10 @@ import { environment } from 'src/environments/environment';
     ServicesModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule 
+    AngularFireAuthModule,
+    FormsModule,
   ],
   providers: [],
-  bootstrap: [
-    AppComponent, 
-    HeaderComponent, 
-    FooterComponent]
+  bootstrap: [AppComponent, HeaderComponent, FooterComponent],
 })
-
-export class AppModule { }
+export class AppModule {}

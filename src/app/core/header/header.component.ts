@@ -5,20 +5,16 @@ import { UserService } from 'src/app/user/user.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  constructor(private userService: UserService, private router: Router) {}
 
-  constructor(    
-    private userService: UserService,
-    private router: Router) { 
-   }
-
-  get isLogged(): boolean{
+  get isLogged(): boolean {
     return this.userService.isLogged;
   }
 
-  get isAdmin(): boolean{
+  get isAdmin(): boolean {
     return this.userService.isAdmin;
   }
 
@@ -27,9 +23,5 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  ngOnInit(): void {
-  }
-
-  
-
+  ngOnInit(): void {}
 }

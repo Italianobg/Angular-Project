@@ -17,7 +17,7 @@
 
     <div class="main">
         <div>
-            <ul>
+            <ul *ngIf="serviceDetails">
                 <form #serviceF="ngForm" (ngSubmit)="editServiceHandler(serviceF.value)">
                     <li class='main-form'>
 

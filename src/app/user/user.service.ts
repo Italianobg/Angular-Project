@@ -4,71 +4,100 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import { IUser } from '../shared/interfaces/user';
+import { map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-
   currentUser: IUser | null;
 
-  get isLogged(): boolean { return !!this.currentUser }
-  get isAdmin(): boolean { return !!this.currentUser? this.currentUser.isAdmin : false}
-
-  constructor(
-    public afAuth: AngularFireAuth,
-    public db: AngularFirestore) { }
-
-  doRegister(value){
-    return new Promise<any>((resolve, reject) => {      
-      firebase.auth().createUserWithEmailAndPassword(value.email, value.password)
-      .then(res => {
-        resolve(res);
-      }, err => reject(err))
-    })
+  get isLogged(): boolean {
+    return !!this.currentUser;
+  }
+  get isAdmin(): boolean {
+    return !!this.currentUser ? this.currentUser.isAdmin : false;
   }
 
-  doLogin(value){
-    return new Promise<any>((resolve, reject) => {      
-      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
-      .then(res => {
-        this.currentUser = {email: res.user.email, isAdmin: false};  
-        this.getData(); 
-        resolve(res);
-      }, err => reject(err))
-    })
-  }
+  constructor(public afAuth: AngularFireAuth, public db: AngularFirestore) {}
 
-  doLogout(){
+  doRegister(value) {
     return new Promise<any>((resolve, reject) => {
-      if(this.currentUser){
-        this.currentUser = null
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(value.email, value.password)
+        .then(
+          (res) => {
+            resolve(res);
+          },
+          (err) => reject(err)
+        );
+    });
+  }
+
+  doLogin(value) {
+    return new Promise<any>((resolve, reject) => {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(value.email, value.password)
+        .then(
+          (res) => {
+            this.currentUser = {
+              id: '',
+              email: res.user.email,
+              isAdmin: false,
+            };
+            this.getData();
+            resolve(res);
+          },
+          (err) => reject(err)
+        );
+    });
+  }
+
+  doLogout() {
+    return new Promise<any>((resolve, reject) => {
+      if (this.currentUser) {
+        this.currentUser = null;
         resolve();
-      }
-      else{
+      } else {
         reject();
       }
     });
   }
 
-  createUser(value){
+  createUser(value) {
     return this.db.collection('users').add({
       email: value.email,
-      isAdmin: false
+      isAdmin: false,
     });
   }
 
-
-  getData(): void{
-    this.getUsers()
-    .subscribe(users => { 
-      const result = users.filter(user => user['email']===this.currentUser.email)[0];
-      this.currentUser = { email: result['email'], isAdmin: result['isAdmin']}
-                           })
+  getData(): void {
+    this.getUsers().subscribe((users) => {
+      const result = users.filter(
+        (user) => user.data['email'] === this.currentUser.email
+      )[0];
+      this.currentUser = {
+        id: result['id'],
+        email: result.data['email'],
+        isAdmin: result.data['isAdmin'],
+      };
+    });
   }
 
-
-  getUsers(){
-    return this.db.collection('users').valueChanges();
+  getUsers() {
+    return this.db
+      .collection('users')
+      .snapshotChanges()
+      .pipe(
+        map((users) => {
+          return users.map((user) => {
+            const data = user.payload.doc.data();
+            const id = user.payload.doc.id;
+            return { id, data };
+          });
+        })
+      );
   }
 }

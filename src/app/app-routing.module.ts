@@ -10,34 +10,37 @@ const routes: Routes = [
   {
     path: '',
     canActivateChild: [AuthGuard],
-    children:[
+    children: [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/home'
+        redirectTo: '/home',
       },
       {
         path: 'home',
         component: HomeComponent,
         data: {
-          title: 'HOME'
-        }
+          title: 'HOME',
+        },
       },
       {
         path: 'repair-request',
         component: RepairRequestComponent,
         data: {
-          title: 'Repair Request'
-        }
+          title: 'Repair Request',
+        },
       },
       {
         path: '**',
         component: NotFoundComponent,
         data: {
-          title: '404'
-        }
-      }]
+          title: '404',
+        },
+      },
+    ],
   },
 ];
 
-export const AppRoutingModule = RouterModule.forRoot(routes);
+export const AppRoutingModule = RouterModule.forRoot(routes, {
+  scrollPositionRestoration: 'top',
+});

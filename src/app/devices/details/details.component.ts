@@ -33,11 +33,24 @@ export class DetailsComponent implements OnInit {
     this.getDeviceDetails(deviceId).subscribe((result) => {
       this.deviceDetails = result;
       this.deviceDetails['id'] = deviceId;
+      if (this.deviceDetails.linkedServices) {
+        this.deviceDetails.linkedServices.forEach((element) => {
+          this.getServiceDetails(element.service).subscribe((result) => {
+            element['name'] = result['name'];
+            element['description'] = result['description'];
+            element['imageUrl'] = result['imageUrl'];
+          });
+        });
+      }
     });
   }
 
   getDeviceDetails(deviceKey) {
     return this.db.collection('devices').doc(deviceKey).valueChanges();
+  }
+
+  getServiceDetails(serviceId) {
+    return this.db.collection('services').doc(serviceId).valueChanges();
   }
 
   deleteDeviceHandler(deviceId, imageUrl) {
