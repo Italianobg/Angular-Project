@@ -28,6 +28,7 @@ const routes: Routes = [
         component: RepairRequestComponent,
         data: {
           title: 'Repair Request',
+          isLogged: true,
         },
       },
       {

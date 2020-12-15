@@ -22,18 +22,7 @@
         <div>
             <ul>
                 <li *ngFor="let service of services">
-                    <div class="services">
-                        <img class="service-image" src="{{service.data.imageUrl}}" onerror="this.style.display='block'">
-                        <div class="services-content">
-                            <div>
-                                <h5 class="service-title">{{service.data.name}}</h5>
-                            </div>
-                            <div class="padding-bottom10"></div>
-                            <div class="service-description">
-                                <p>{{service.data.description}}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <app-service-tile [service]="service"></app-service-tile>
                 </li>
             </ul>
         </div>

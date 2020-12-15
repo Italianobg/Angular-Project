@@ -39,6 +39,7 @@ export class DetailsComponent implements OnInit {
             element['name'] = result['name'];
             element['description'] = result['description'];
             element['imageUrl'] = result['imageUrl'];
+            element['data'] = element;
           });
         });
       }

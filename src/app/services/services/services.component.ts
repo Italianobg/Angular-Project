@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from 'src/app/user/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-services',
@@ -43,7 +44,18 @@ export class ServicesComponent implements OnInit {
   }
 
   getServices() {
-    return this.db.collection('services').snapshotChanges();
+    return this.db
+      .collection('services')
+      .snapshotChanges()
+      .pipe(
+        map((services) => {
+          return services.map((service) => {
+            const data = service.payload.doc.data();
+            const id = service.payload.doc.id;
+            return { id, data };
+          });
+        })
+      );
   }
 
   deleteServiceHandler(serviceId, imageUrl) {

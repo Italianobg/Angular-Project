@@ -39,7 +39,7 @@
                             <label class="middle error">{{errorMessage}}</label>
                             <label class="middle success">{{successMessage}}</label>
                             <div class='middle'>
-                                <button class="form-button " type="submit " value="Submit ">Submit</button>
+                                <button [disabled]="deviceF.invalid" class="form-button " type="submit " value="Submit ">Submit</button>
                             </div>
                         </div>
 

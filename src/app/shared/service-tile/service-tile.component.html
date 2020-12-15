@@ -1,0 +1,22 @@
+<li (mouseenter)="changeMouseState('start')" (mouseover)="changeMouseState('hover')" (mouseleave)="changeMouseState('rest')">
+    <div class=" services ">
+        <img class="service-image " src="{{service.data.imageUrl}} " onerror="this.style.display='block' " [@image]="currentState ">
+        <div class="services-content ">
+            <div [@title]="currentState ">
+                <h5 class="service-title ">{{service.data.name}}</h5>
+            </div>
+            <div class="padding-bottom10 "></div>
+            <div class="service-description " [@description]="currentState ">
+                <p>{{service.data.description}}</p>
+                <p *ngIf="service.data.price " class="price ">{{service.price}} BGN</p>
+            </div>
+
+            <div class=buttons>
+                <div *ngIf="isAdmin && showButton " class='middle'>
+                    <button [routerLink]="[ '/services/edit', service.id] " class="form-button " type="submit " value="Submit ">Edit</button>
+                    <button (click)="deleteServiceHandler(service.id, service.data.imageUrl) " class="form-button " type="submit " value="Submit ">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

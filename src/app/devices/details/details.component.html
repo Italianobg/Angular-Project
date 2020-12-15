@@ -29,27 +29,15 @@
         <!-- nxs-row-container -->
     </div>
 
-    <div *ngIf="!deviceDetails.linkedServices" class="middle">
+    <div *ngIf="!deviceDetails.linkedServices.length" class="middle">
         <p class="middle">No services are available at this point!</p>
     </div>
 
-    <div class="content-repairs">
+    <div *ngIf="deviceDetails.linkedServices.length" class="content-repairs">
         <div>
             <ul>
                 <li *ngFor="let service of deviceDetails.linkedServices">
-                    <div class="services">
-                        <img class="service-image" src="{{service.imageUrl}}" onerror="this.style.display='block'">
-                        <div class="services-content">
-                            <div>
-                                <h5 class="service-title">{{service.name}}</h5>
-                            </div>
-                            <div class="padding-bottom10"></div>
-                            <div class="service-description">
-                                <p>{{service.description}}</p>
-                                <p class="price">{{service.price}} BGN</p>
-                            </div>
-                        </div>
-                    </div>
+                    <app-service-tile [service]="service"></app-service-tile>
                 </li>
             </ul>
         </div>

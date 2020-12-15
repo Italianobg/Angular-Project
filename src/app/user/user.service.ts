@@ -13,7 +13,7 @@ export class UserService {
   currentUser: IUser | null;
 
   get isLogged(): boolean {
-    return !!this.currentUser;
+    return !!this.currentUser ? this.currentUser.isLogged : false;
   }
   get isAdmin(): boolean {
     return !!this.currentUser ? this.currentUser.isAdmin : false;
@@ -35,23 +35,9 @@ export class UserService {
     });
   }
 
-  doLogin(value) {
-    return new Promise<any>((resolve, reject) => {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(value.email, value.password)
-        .then(
-          (res) => {
-            this.currentUser = {
-              id: '',
-              email: res.user.email,
-              isAdmin: false,
-            };
-            this.getData();
-            resolve(res);
-          },
-          (err) => reject(err)
-        );
+  doLogin(form) {
+    return this.afAuth.setPersistence('session').then((_) => {
+      return this.afAuth.signInWithEmailAndPassword(form.email, form.password);
     });
   }
 
@@ -59,6 +45,7 @@ export class UserService {
     return new Promise<any>((resolve, reject) => {
       if (this.currentUser) {
         this.currentUser = null;
+        sessionStorage.clear();
         resolve();
       } else {
         reject();
@@ -73,14 +60,13 @@ export class UserService {
     });
   }
 
-  getData(): void {
+  getData(email): void {
     this.getUsers().subscribe((users) => {
-      const result = users.filter(
-        (user) => user.data['email'] === this.currentUser.email
-      )[0];
+      const result = users.filter((user) => user.data['email'] === email)[0];
       this.currentUser = {
         id: result['id'],
         email: result.data['email'],
+        isLogged: !!result.data['email'],
         isAdmin: result.data['isAdmin'],
       };
     });
@@ -99,5 +85,27 @@ export class UserService {
           });
         })
       );
+  }
+
+  login(form) {
+    return this.afAuth.setPersistence('session').then((_) => {
+      return this.afAuth.signInWithEmailAndPassword(form.email, form.password);
+    });
+  }
+
+  userSessionCheck() {
+    const authKey = Object.keys(sessionStorage).filter((item) =>
+      item.startsWith('firebase:authUser')
+    )[0];
+
+    const user = authKey
+      ? JSON.parse(sessionStorage.getItem(authKey))
+      : undefined;
+
+    if (user === undefined) {
+      this.currentUser = null;
+    } else {
+      this.getData(user.email);
+    }
   }
 }
