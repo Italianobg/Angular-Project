@@ -46,7 +46,6 @@ export class UserService {
       if (this.currentUser) {
         this.currentUser = null;
         sessionStorage.clear();
-        resolve();
       } else {
         reject();
       }
@@ -63,12 +62,21 @@ export class UserService {
   getData(email): void {
     this.getUsers().subscribe((users) => {
       const result = users.filter((user) => user.data['email'] === email)[0];
-      this.currentUser = {
-        id: result['id'],
-        email: result.data['email'],
-        isLogged: !!result.data['email'],
-        isAdmin: result.data['isAdmin'],
-      };
+      if (result) {
+        this.currentUser = {
+          id: result['id'],
+          email: result.data['email'],
+          isLogged: !!result.data['email'],
+          isAdmin: result.data['isAdmin'],
+        };
+      } else {
+        this.currentUser = {
+          id: '',
+          email: '',
+          isLogged: false,
+          isAdmin: false,
+        };
+      }
     });
   }
 

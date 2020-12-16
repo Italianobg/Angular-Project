@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { AdminService } from '../admin.service';
+import { FirebaseService } from 'src/app/shared/firebase.service';
 
 @Component({
   selector: 'app-add-device',
@@ -22,7 +22,7 @@ export class AddDeviceComponent implements OnInit {
   constructor(
     private router: Router,
     private storage: AngularFireStorage,
-    private adminService: AdminService
+    private firebaseService: FirebaseService
   ) {}
 
   ngOnInit(): void {
@@ -55,23 +55,24 @@ export class AddDeviceComponent implements OnInit {
   }
 
   addDeviceHandler(formData) {
-    formData['imageUrl'] = this.fb;
-    this.adminService.addDevice(formData).then(
-      (res) => {
+    formData['imageUrl'] = this.fb ? this.fb : '';
+    this.firebaseService
+      .addDevice(formData)
+      .then(() => {
         this.errorMessage = '';
         this.successMessage = 'Device has been added successfully!';
         this.router.navigate(['/devices']);
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.log(err);
         this.errorMessage = err.message;
         this.successMessage = '';
-      }
-    );
+      });
   }
 
-  deleteImage() {
-    this.storage.refFromURL(this.deviceDetails.imageUrl).delete();
-    return (this.deviceDetails.imageUrl = '');
+  deleteImageHandler() {
+    this.deviceDetails.imageUrl = this.firebaseService.deleteImage(
+      this.deviceDetails.imageUrl
+    );
   }
 }

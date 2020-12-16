@@ -1,5 +1,5 @@
 <li (mouseenter)="changeMouseState('start')" (mouseover)="changeMouseState('hover')" (mouseleave)="changeMouseState('rest')">
-    <div class=" services ">
+    <div class=" services" *ngIf="service.data">
         <img class="service-image " src="{{service.data.imageUrl}} " onerror="this.style.display='block' " [@image]="currentState ">
         <div class="services-content ">
             <div [@title]="currentState ">

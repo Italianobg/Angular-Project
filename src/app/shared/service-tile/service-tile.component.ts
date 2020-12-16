@@ -10,6 +10,7 @@ import { UserService } from 'src/app/user/user.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FirebaseService } from '../firebase.service';
 
 @Component({
   selector: 'app-service-tile',
@@ -100,10 +101,9 @@ export class ServiceTileComponent implements OnInit {
 
   constructor(
     public userService: UserService,
-    public db: AngularFirestore,
-    public storage: AngularFireStorage,
     public activatedRoute: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public firebaseService: FirebaseService
   ) {}
 
   ngOnInit(): void {
@@ -130,18 +130,14 @@ export class ServiceTileComponent implements OnInit {
   }
 
   deleteServiceHandler(serviceId, imageUrl) {
-    this.deleteDevice(serviceId).then(
+    this.firebaseService.deleteService(serviceId).then(
       (res) => {
-        this.storage.refFromURL(imageUrl).delete();
+        this.firebaseService.deleteImage(imageUrl);
         this.router.navigate(['/services']);
       },
       (err) => {
         console.log(err);
       }
     );
-  }
-
-  deleteDevice(serviceKey) {
-    return this.db.collection('services').doc(serviceKey).delete();
   }
 }

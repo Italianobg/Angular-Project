@@ -40,7 +40,7 @@
                             <label>Image</label>
                             <div *ngIf="deviceDetails.imageUrl">
                                 <div class="middle">
-                                    <button class="form-button" type="submit" value="Submit" (click)="deleteImage()">Delete Image</button>
+                                    <button class="form-button" type="submit" value="Submit" (click)="deleteImageHandler()">Delete Image</button>
                                 </div>
                                 <div class="margin-bottom10"></div>
                                 <div class="middle">
@@ -65,7 +65,7 @@
                                 <div *ngFor="let linkedService of deviceDetails.linkedServices" class="list-services">
                                     <input type="text" disabled value="{{linkedService.name}}" />
                                     <input type="text" value="{{linkedService.price}}" placeholder="price" disabled />
-                                    <button class="form-services-button" type="button" value="Submit" (click)="deleteAssignedService(deviceDetails.id, linkedService.service, linkedService.price)">Remove</button>
+                                    <button class="form-services-button" type="button" value="Submit" (click)="deleteAssignedServiceHandler(deviceDetails.id, linkedService.service, linkedService.price)">Remove</button>
                                 </div>
 
                                 <div class="assign-service">
@@ -77,7 +77,7 @@
                                             </option>
                                         </select>
                                         <input #servicePrice="ngModel" [class.input-error]="servicePrice.touched && !!servicePrice.errors" type="number" name="price" id="price" ngModel required placeholder="price" />
-                                        <button [disabled]="serviceF.invalid" class="form-services-button" type="submit" value="Submit" (click)="assignService(serviceF.value.service.id, serviceF.value.price); serviceF.reset()">Add</button>
+                                        <button [disabled]="serviceF.invalid" class="form-services-button" type="submit" value="Submit" (click)="assignServiceHandler(serviceF.value.service.id, serviceF.value.price); serviceF.reset()">Add</button>
                                     </form>
                                 </div>
                             </div>

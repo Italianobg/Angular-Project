@@ -8,8 +8,6 @@ import { RepairRequestsComponent } from './repair-requests/repair-requests.compo
 import { AdminHeaderComponent } from './admin-header/admin-header.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { FormsModule } from '@angular/forms';
-import { AdminService } from './admin.service';
-import { RepairRequestComponent } from '../repair-request/repair-request.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +18,5 @@ import { RepairRequestComponent } from '../repair-request/repair-request.compone
     AdminHeaderComponent,
   ],
   imports: [CommonModule, SharedModule, AdminRoutingModule, FormsModule],
-  providers: [AdminService],
 })
 export class AdminModule {}

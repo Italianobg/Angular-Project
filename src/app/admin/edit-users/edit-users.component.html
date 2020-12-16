@@ -11,8 +11,8 @@
                             <label>Users:</label>
                             <div *ngFor="let user of users">
                                 {{user.data.email}}
-                                <button *ngIf="user.data.isAdmin" [disabled]="user.data.email === currentUser.email" class="form-services-button" (click)="removeAdmin( user.id, user.data.email )" type="button" value="Submit">Remove</button>
-                                <button *ngIf="!user.data.isAdmin" [disabled]="user.data.email === currentUser.email" class="form-services-button" (click)="addAdmin( user.id, user.data.email )" type="button" value="Submit">Add</button>
+                                <button *ngIf="user.data.isAdmin" [disabled]="user.data.email === currentUser.email" class="form-services-button" (click)="removeAdminHandler( user.id, user.data.email )" type="button" value="Submit">Remove</button>
+                                <button *ngIf="!user.data.isAdmin" [disabled]="user.data.email === currentUser.email" class="form-services-button" (click)="addAdminHandler( user.id, user.data.email )" type="button" value="Submit">Add</button>
                             </div>
                         </div>
                     </div>

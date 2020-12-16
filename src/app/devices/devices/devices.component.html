@@ -21,23 +21,7 @@
     <div class="devices">
         <ul>
             <li *ngFor="let device of devices">
-                <div>
-                    <div>
-                        <a [routerLink]="['/devices/details', device.payload.doc.id]">
-                            <h3 class="middle">{{device.payload.doc.data().name}}</h3>
-                        </a>
-                        <div class="padding5"></div>
-                        <img src={{device.payload.doc.data().imageUrl}} alt="" title="" class="stretch" />
-                        <div class=" padding5 "></div>
-                        <div class="devices-description">
-                            <p>
-                                <a [routerLink]="['/devices/details', device.payload.doc.id]">
-                                    {{device.payload.doc.data().shortDescription}}
-                                </a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                <app-device-tile [device]="device"></app-device-tile>
             </li>
         </ul>
         <!-- row-container -->

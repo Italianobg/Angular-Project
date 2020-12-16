@@ -33,7 +33,7 @@
         <p class="middle">No services are available at this point!</p>
     </div>
 
-    <div *ngIf="deviceDetails.linkedServices.length" class="content-repairs">
+    <div *ngIf="deviceDetails.linkedServices.length && deviceDetails.linkedServices" class="content-repairs">
         <div>
             <ul>
                 <li *ngFor="let service of deviceDetails.linkedServices">

@@ -1,0 +1,18 @@
+<div class="device">
+    <div>
+        <a [routerLink]="['/devices/details', device.id]">
+            <h3 class="middle">{{device.data.name}}</h3>
+
+            <div class="padding5"></div>
+        </a>
+        <img src={{device.data.imageUrl}} alt="" title="" class="stretch" />
+        <a [routerLink]="['/devices/details', device.id]">
+            <div class=" padding5 "></div>
+            <div class="devices-description">
+                <p>
+                    {{device.data.shortDescription}}
+                </p>
+            </div>
+        </a>
+    </div>
+</div>

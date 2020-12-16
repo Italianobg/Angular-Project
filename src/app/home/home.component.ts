@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { FirebaseService } from '../shared/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -11,14 +11,14 @@ export class HomeComponent implements OnInit {
   services;
   devices;
 
-  constructor(public db: AngularFirestore) {}
+  constructor(public firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
     this.getData();
   }
 
   getData() {
-    this.getServices().subscribe((result) => {
+    this.firebaseService.getServices().subscribe((result) => {
       if (result.length === 0) {
         this.services = undefined;
       } else {
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       }
     });
 
-    this.getDevices().subscribe((result) => {
+    this.firebaseService.getDevices().subscribe((result) => {
       if (result.length === 0) {
         this.devices = undefined;
       } else {
@@ -37,35 +37,5 @@ export class HomeComponent implements OnInit {
           .slice(0, 3);
       }
     });
-  }
-
-  getServices() {
-    return this.db
-      .collection('services')
-      .snapshotChanges()
-      .pipe(
-        map((services) => {
-          return services.map((service) => {
-            const data = service.payload.doc.data();
-            const id = service.payload.doc.id;
-            return { id, data };
-          });
-        })
-      );
-  }
-
-  getDevices() {
-    return this.db
-      .collection('devices')
-      .snapshotChanges()
-      .pipe(
-        map((devices) => {
-          return devices.map((device) => {
-            const data = device.payload.doc.data();
-            const id = device.payload.doc.id;
-            return { id, data };
-          });
-        })
-      );
   }
 }

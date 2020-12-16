@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { UserService } from '../user/user.service';
 import { map } from 'rxjs/operators';
 import firebase from 'firebase/app';
+import { FirebaseService } from '../shared/firebase.service';
 
 @Component({
   selector: 'app-repair-request',
@@ -17,7 +18,11 @@ export class RepairRequestComponent implements OnInit {
   currentServices;
   selectedService;
 
-  constructor(public userService: UserService, public db: AngularFirestore) {}
+  constructor(
+    public userService: UserService,
+    public db: AngularFirestore,
+    public firebaseService: FirebaseService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.userService.currentUser;
@@ -25,14 +30,14 @@ export class RepairRequestComponent implements OnInit {
   }
 
   getData() {
-    this.getDevices().subscribe((result) => {
+    this.firebaseService.getDevices().subscribe((result) => {
       if (result.length === 0) {
         this.devices = undefined;
       } else {
         this.devices = result;
       }
     });
-    this.getServices().subscribe((result) => {
+    this.firebaseService.getServices().subscribe((result) => {
       if (result.length === 0) {
         this.services = undefined;
       } else {
@@ -41,42 +46,8 @@ export class RepairRequestComponent implements OnInit {
     });
   }
 
-  getDevices() {
-    return this.db
-      .collection('devices')
-      .snapshotChanges()
-      .pipe(
-        map((devices) => {
-          return devices.map((device) => {
-            const data = device.payload.doc.data();
-            const id = device.payload.doc.id;
-            return { id, data };
-          });
-        })
-      );
-  }
-
-  getDevice(id) {
-    return this.db.collection('devices').doc(id).valueChanges();
-  }
-
-  getServices() {
-    return this.db
-      .collection('services')
-      .snapshotChanges()
-      .pipe(
-        map((services) => {
-          return services.map((service) => {
-            const data = service.payload.doc.data();
-            const id = service.payload.doc.id;
-            return { id, data };
-          });
-        })
-      );
-  }
-
   selectedDeviceHandler(id) {
-    this.getDevice(id).subscribe((result) => {
+    this.firebaseService.getDeviceDetails(id).subscribe((result) => {
       this.selectedDevice = result;
       this.selectedDevice['id'] = id;
 
@@ -88,20 +59,16 @@ export class RepairRequestComponent implements OnInit {
             }
           });
         });
+      } else {
+        this.selectedDevice.linkedServices = [];
       }
 
-      this.currentServices = this.selectedDevice.linkedServices
-        ? this.selectedDevice.linkedServices
-        : [];
+      this.currentServices = this.selectedDevice.linkedServices;
     });
   }
 
-  getServiceDetails(id) {
-    return this.db.collection('services').doc(id).valueChanges();
-  }
-
   selectedServiceHandler(id) {
-    this.getServiceDetails(id).subscribe((result) => {
+    this.firebaseService.getServiceDetails(id).subscribe((result) => {
       this.selectedService = result;
       this.selectedService['id'] = id;
     });
@@ -109,19 +76,13 @@ export class RepairRequestComponent implements OnInit {
 
   repairRequest(formData) {
     const increment = firebase.firestore.FieldValue.increment(1);
-    this.db
-      .collection('devices')
-      .doc(formData.sDevice)
-      .update({ requestCounter: increment });
-    this.db
-      .collection('services')
-      .doc(formData.sService)
-      .update({ requestCounter: increment });
+    this.firebaseService.incrementDeviceCounter(formData.sDevice, increment);
+    this.firebaseService.incrementDeviceCounter(formData.sService, increment);
 
     formData.email = this.currentUser.email;
     formData.device = this.selectedDevice.name;
     formData.service = this.selectedService.name;
     formData.status = 'Open';
-    this.db.collection('requests').add(formData);
+    this.firebaseService.addRequest(formData);
   }
 }

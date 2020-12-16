@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { AdminService } from '../admin.service';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { FirebaseService } from 'src/app/shared/firebase.service';
 
 @Component({
   selector: 'app-add-service',
@@ -22,7 +22,7 @@ export class AddServiceComponent implements OnInit {
   constructor(
     private router: Router,
     private storage: AngularFireStorage,
-    private adminService: AdminService
+    private firebaseService: FirebaseService
   ) {}
 
   ngOnInit(): void {
@@ -54,24 +54,25 @@ export class AddServiceComponent implements OnInit {
       });
   }
 
-  deleteImage() {
-    this.storage.refFromURL(this.serviceDetails.imageUrl).delete();
-    return (this.serviceDetails.imageUrl = '');
+  deleteImageHandler() {
+    this.serviceDetails.imageUrl = this.firebaseService.deleteImage(
+      this.serviceDetails.imageUrl
+    );
   }
 
   addServiceHandler(formData) {
     formData['imageUrl'] = this.fb ? this.fb : '';
-    this.adminService.addService(formData).then(
-      (res) => {
+    this.firebaseService
+      .addService(formData)
+      .then(() => {
         this.errorMessage = '';
         this.successMessage = 'Service has been added successfully!';
         this.router.navigate(['/services']);
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.log(err);
         this.errorMessage = err.message;
         this.successMessage = '';
-      }
-    );
+      });
   }
 }

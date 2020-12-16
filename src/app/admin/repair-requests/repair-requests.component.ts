@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { FirebaseService } from 'src/app/shared/firebase.service';
 
 @Component({
   selector: 'app-repair-requests',
@@ -10,44 +9,23 @@ import { map } from 'rxjs/operators';
 export class RepairRequestsComponent implements OnInit {
   requests;
 
-  constructor(public db: AngularFirestore) {}
+  constructor(public firebaseService: FirebaseService) {}
 
   ngOnInit(): void {
     this.getData();
   }
 
   getData() {
-    this.getRequests().subscribe((result) => {
+    this.firebaseService.getRequests().subscribe((result) => {
       if (result.length === 0) {
         this.requests = undefined;
       } else {
         this.requests = result;
-        console.log(this.requests);
       }
     });
   }
 
-  getRequests() {
-    return this.db
-      .collection('requests')
-      .snapshotChanges()
-      .pipe(
-        map((requests) => {
-          return requests.map((requests) => {
-            const data = requests.payload.doc.data();
-            const id = requests.payload.doc.id;
-            return { id, data };
-          });
-        })
-      );
-  }
-
   editStatusHandler(formData, id) {
-    console.log(formData, id);
-    this.editRequest(formData, id);
-  }
-
-  editRequest(status, id) {
-    return this.db.collection('requests').doc(id).update(status);
+    this.firebaseService.editRequest(formData, id);
   }
 }

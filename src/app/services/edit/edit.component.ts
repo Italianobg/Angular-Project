@@ -4,7 +4,8 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AdminService } from '../../admin/admin.service';
+import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IServiceData } from 'src/app/shared/interfaces/service';
 
 @Component({
   selector: 'app-edit',
@@ -12,7 +13,7 @@ import { AdminService } from '../../admin/admin.service';
   styleUrls: ['../../../form-style.css', './edit.component.css'],
 })
 export class EditComponent implements OnInit {
-  serviceDetails;
+  serviceDetails: IServiceData;
   selectedFile: File = null;
   fb;
   downloadURL: Observable<string>;
@@ -25,7 +26,7 @@ export class EditComponent implements OnInit {
     private router: Router,
     private storage: AngularFireStorage,
     private activatedRoute: ActivatedRoute,
-    private adminService: AdminService
+    private firebaseService: FirebaseService
   ) {
     const serviceId = activatedRoute.snapshot.params.id;
     this.getData(serviceId);
@@ -34,18 +35,16 @@ export class EditComponent implements OnInit {
   ngOnInit(): void {}
 
   getData(serviceId) {
-    this.getServiceDetails(serviceId).subscribe((result) => {
-      this.serviceDetails = result;
-      this.serviceDetails['id'] = serviceId;
-    });
+    this.firebaseService
+      .getServiceDetails(serviceId)
+      .subscribe((result: any) => {
+        this.serviceDetails = result;
+        this.serviceDetails['id'] = serviceId;
+      });
   }
 
-  getServiceDetails(serviceId) {
-    return this.db.collection('services').doc(serviceId).valueChanges();
-  }
-
-  deleteImage() {
-    this.storage.refFromURL(this.serviceDetails.imageUrl).delete();
+  deleteImageHandler() {
+    this.firebaseService.deleteImage(this.serviceDetails.imageUrl);
     return (this.serviceDetails.imageUrl = '');
   }
 
@@ -76,17 +75,17 @@ export class EditComponent implements OnInit {
 
   editServiceHandler(formData) {
     formData['imageUrl'] = this.fb ? this.fb : this.serviceDetails.imageUrl;
-    this.adminService.editService(this.serviceDetails.id, formData).then(
-      (res) => {
+    this.firebaseService
+      .editService(this.serviceDetails.id, formData)
+      .then(() => {
         this.errorMessage = '';
         this.successMessage = 'Service has been successfully edited!';
         this.router.navigate(['/services']);
-      },
-      (err) => {
+      })
+      .catch((err) => {
         console.log(err);
         this.errorMessage = err.message;
         this.successMessage = '';
-      }
-    );
+      });
   }
 }

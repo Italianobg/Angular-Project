@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FirebaseService } from 'src/app/shared/firebase.service';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -13,11 +12,10 @@ export class DetailsComponent implements OnInit {
   deviceDetails;
 
   constructor(
-    public db: AngularFirestore,
-    public storage: AngularFireStorage,
     public activatedRoute: ActivatedRoute,
     public router: Router,
-    public userService: UserService
+    public userService: UserService,
+    public firebaseService: FirebaseService
   ) {
     const deviceId = activatedRoute.snapshot.params.id;
     this.getData(deviceId);
@@ -30,43 +28,35 @@ export class DetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   getData(deviceId) {
-    this.getDeviceDetails(deviceId).subscribe((result) => {
+    this.firebaseService.getDeviceDetails(deviceId).subscribe((result) => {
       this.deviceDetails = result;
       this.deviceDetails['id'] = deviceId;
       if (this.deviceDetails.linkedServices) {
         this.deviceDetails.linkedServices.forEach((element) => {
-          this.getServiceDetails(element.service).subscribe((result) => {
-            element['name'] = result['name'];
-            element['description'] = result['description'];
-            element['imageUrl'] = result['imageUrl'];
-            element['data'] = element;
-          });
+          this.firebaseService
+            .getServiceDetails(element.service)
+            .subscribe((result) => {
+              element['name'] = result['name'];
+              element['description'] = result['description'];
+              element['imageUrl'] = result['imageUrl'];
+              element['data'] = element;
+            });
         });
+      } else {
+        this.deviceDetails.linkedServices = [];
       }
     });
   }
 
-  getDeviceDetails(deviceKey) {
-    return this.db.collection('devices').doc(deviceKey).valueChanges();
-  }
-
-  getServiceDetails(serviceId) {
-    return this.db.collection('services').doc(serviceId).valueChanges();
-  }
-
   deleteDeviceHandler(deviceId, imageUrl) {
-    this.deleteDevice(deviceId).then(
+    this.firebaseService.deleteDevice(deviceId).then(
       (res) => {
-        this.storage.refFromURL(imageUrl).delete();
+        this.firebaseService.deleteImage(imageUrl);
         this.router.navigate(['/devices']);
       },
       (err) => {
         console.log(err);
       }
     );
-  }
-
-  deleteDevice(deviceKey) {
-    return this.db.collection('devices').doc(deviceKey).delete();
   }
 }

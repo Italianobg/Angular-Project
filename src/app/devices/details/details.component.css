@@ -20,6 +20,7 @@
 .details img {
     display: block;
     margin: 0 auto;
+    max-height: 200px;
 }
 
 .details li:first-child {
@@ -130,8 +131,4 @@
 
 .padding-bottom10 {
     padding-bottom: 10px !important;
-}
-
-.price {
-    text-shadow: 0 0 black;
 }

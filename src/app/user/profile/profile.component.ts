@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
+import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IUser } from 'src/app/shared/interfaces/user';
+import { IRequests } from 'src/app/shared/interfaces/requests';
 import { UserService } from '../user.service';
 
 @Component({
@@ -9,9 +10,13 @@ import { UserService } from '../user.service';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  currentUser;
-  requests;
-  constructor(private userService: UserService, private db: AngularFirestore) {}
+  currentUser: IUser;
+  requests: IRequests;
+
+  constructor(
+    private userService: UserService,
+    private firebaseService: FirebaseService
+  ) {}
 
   ngOnInit(): void {
     this.currentUser = this.userService.currentUser;
@@ -19,7 +24,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getData() {
-    this.getRequests().subscribe((result) => {
+    this.firebaseService.getRequests().subscribe((result) => {
       if (result.length === 0) {
         this.requests = undefined;
       } else {
@@ -28,20 +33,5 @@ export class ProfileComponent implements OnInit {
         );
       }
     });
-  }
-
-  getRequests() {
-    return this.db
-      .collection('requests')
-      .snapshotChanges()
-      .pipe(
-        map((requests) => {
-          return requests.map((requests) => {
-            const data = requests.payload.doc.data();
-            const id = requests.payload.doc.id;
-            return { id, data };
-          });
-        })
-      );
   }
 }
