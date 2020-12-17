@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "angular-project-95caa"
+  },
+  "targets": {
+    "angular-project-95caa": {
+      "hosting": {
+        "ProjectApp": [
+          "angular-project-95caa"
+        ]
+      }
+    }
+  }
+}
