@@ -11,10 +11,14 @@
 
 .requests ul li {
     width: 100%;
-    border-right: 2.4vw solid transparent;
+    border-right: 5% solid transparent;
+    border-left: 5% solid transparent;
     float: left;
     margin-bottom: 30px;
     font-family: Droid Sans, sans-serif;
+    border-top-color: black;
+    border-top-width: 1px;
+    border-top-style: dotted;
 }
 
 .requests ul li>div {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IDevices } from 'src/app/shared/interfaces/device';
 
 @Component({
   selector: 'app-devices',
@@ -8,7 +9,7 @@ import { FirebaseService } from 'src/app/shared/firebase.service';
   styleUrls: ['./devices.component.css'],
 })
 export class DevicesComponent implements OnInit {
-  devices;
+  devices: IDevices;
 
   constructor(
     public db: AngularFirestore,

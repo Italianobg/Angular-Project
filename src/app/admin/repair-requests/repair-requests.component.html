@@ -1,38 +1,47 @@
 <div class="content">
     <app-admin-header></app-admin-header>
-
+    <div *ngIf="!requests" class="middle">
+        <p class="middle">No repair requests are made so far!</p>
+    </div>
+    <div class="middle">
+        <label class="middle error">{{errorMessage}}</label>
+        <label class="middle success">{{successMessage}}</label>
+    </div>
     <div class="requests">
-        <ul>
-            <li *ngFor="let request of requests">
-                <form #f="ngForm" (ngSubmit)="editStatusHandler(f.value, request.id)">
-                    <div class='form'>
-                        <div class="left">
-                            <h3 class="middle"> {{request.data.subject}} </h3>
-                            <h5 class="middle">Device: {{request.data.device}} </h5>
-                            <h5 class="middle">Service: {{request.data.service}} </h5>
-                        </div>
-                        <div class="requests-description">
-                            <textarea disabled class='message'> {{request.data.message}} </textarea>
-                        </div>
-                        <div class="right">
+
+        <div *ngIf="requests">
+            <ul>
+                <li *ngFor="let request of requests">
+                    <form #f="ngForm" (ngSubmit)="editStatusHandler(f.value, request.id)">
+                        <div class='form'>
                             <div class="left">
-                                <h5 class="middle">Requestor: {{request.data.name}} </h5>
-                                <h5 class="middle">Email: {{request.data.email}} </h5>
-                                <div class="status">
-                                    <label for="status">Status *</label>
-                                    <input #status="ngModel" [class.input-error]="status.touched && !!status.errors" type="status" name="status" id="status" [(ngModel)]="request.data.status" required />
-                                    <p class="middle" *ngIf="status.touched && status.errors?.required"> Status is required! </p>
+                                <h3 class="middle"> {{request.data.subject}} </h3>
+                                <h5 class="middle">Device: {{request.data.device}} </h5>
+                                <h5 class="middle">Service: {{request.data.service}} </h5>
+                            </div>
+                            <div class="requests-description">
+                                <textarea disabled class='message'> {{request.data.message}} </textarea>
+                            </div>
+                            <div class="right">
+                                <div class="left">
+                                    <h5 class="middle">Requestor: {{request.data.name}} </h5>
+                                    <h5 class="middle">Email: {{request.data.email}} </h5>
+                                    <div class="status">
+                                        <label for="status">Status *</label>
+                                        <input #status="ngModel" [class.input-error]="status.touched && !!status.errors" type="status" name="status" id="status" [(ngModel)]="request.data.status" required />
+                                        <p class="middle" *ngIf="status.touched && status.errors?.required"> Status is required! </p>
+                                    </div>
+                                </div>
+                                <div class='button'>
+                                    <button [disabled]="f.invalid" class="form-button" type="submit" value="Submit">Update Status</button>
+
                                 </div>
                             </div>
-                            <div class='button'>
-                                <button [disabled]="f.invalid" class="form-button" type="submit" value="Submit">Update Status</button>
-                            </div>
                         </div>
-
-                    </div>
-                </form>
-            </li>
-        </ul>
+                    </form>
+                </li>
+            </ul>
+        </div>
         <!-- row-container -->
     </div>
 </div>

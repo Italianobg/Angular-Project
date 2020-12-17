@@ -38,14 +38,17 @@ export class EditComponent implements OnInit {
     this.firebaseService
       .getServiceDetails(serviceId)
       .subscribe((result: any) => {
-        this.serviceDetails = result;
+        this.serviceDetails = result ? result : {};
         this.serviceDetails['id'] = serviceId;
       });
   }
 
   deleteImageHandler() {
-    this.firebaseService.deleteImage(this.serviceDetails.imageUrl);
-    return (this.serviceDetails.imageUrl = '');
+    this.firebaseService
+      .deleteImage(this.serviceDetails.imageUrl)
+      .subscribe((result) => {
+        this.serviceDetails.imageUrl = '';
+      });
   }
 
   onFileSelected(event) {

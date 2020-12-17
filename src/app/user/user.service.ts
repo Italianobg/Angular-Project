@@ -3,14 +3,14 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
 import 'firebase/auth';
-import { IUser } from '../shared/interfaces/user';
+import { IUserData } from '../shared/interfaces/user';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  currentUser: IUser | null;
+  currentUser: IUserData | null;
 
   get isLogged(): boolean {
     return !!this.currentUser ? this.currentUser.isLogged : false;

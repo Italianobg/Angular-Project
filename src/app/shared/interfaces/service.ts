@@ -12,4 +12,5 @@ export interface IServiceData {
   description: string;
   imageUrl: string;
   name: string;
+  price: number;
 }

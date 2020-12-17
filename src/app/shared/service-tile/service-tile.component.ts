@@ -7,10 +7,9 @@ import {
   transition,
 } from '@angular/animations';
 import { UserService } from 'src/app/user/user.service';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from '../firebase.service';
+import { IService } from '../interfaces/service';
 
 @Component({
   selector: 'app-service-tile',
@@ -96,8 +95,8 @@ import { FirebaseService } from '../firebase.service';
 })
 export class ServiceTileComponent implements OnInit {
   currentState: string = 'rest';
-  @Input() service;
-  showButton;
+  @Input() service: IService;
+  showButton: boolean;
 
   constructor(
     public userService: UserService,

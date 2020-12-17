@@ -19,11 +19,13 @@
         <p class="middle">No devices are available at the moment!</p>
     </div>
     <div class="devices">
-        <ul>
-            <li *ngFor="let device of devices">
-                <app-device-tile [device]="device"></app-device-tile>
-            </li>
-        </ul>
-        <!-- row-container -->
+        <div *ngIf="devices">
+            <ul>
+                <li *ngFor="let device of devices">
+                    <app-device-tile [device]="device"></app-device-tile>
+                </li>
+            </ul>
+            <!-- row-container -->
+        </div>
     </div>
 </div>

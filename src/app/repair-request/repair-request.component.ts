@@ -4,6 +4,7 @@ import { UserService } from '../user/user.service';
 import { map } from 'rxjs/operators';
 import firebase from 'firebase/app';
 import { FirebaseService } from '../shared/firebase.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-repair-request',
@@ -20,8 +21,8 @@ export class RepairRequestComponent implements OnInit {
 
   constructor(
     public userService: UserService,
-    public db: AngularFirestore,
-    public firebaseService: FirebaseService
+    public firebaseService: FirebaseService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +63,6 @@ export class RepairRequestComponent implements OnInit {
       } else {
         this.selectedDevice.linkedServices = [];
       }
-
       this.currentServices = this.selectedDevice.linkedServices;
     });
   }
@@ -77,12 +77,14 @@ export class RepairRequestComponent implements OnInit {
   repairRequest(formData) {
     const increment = firebase.firestore.FieldValue.increment(1);
     this.firebaseService.incrementDeviceCounter(formData.sDevice, increment);
-    this.firebaseService.incrementDeviceCounter(formData.sService, increment);
+    this.firebaseService.incrementServiceCounter(formData.sService, increment);
 
     formData.email = this.currentUser.email;
     formData.device = this.selectedDevice.name;
     formData.service = this.selectedService.name;
     formData.status = 'Open';
-    this.firebaseService.addRequest(formData);
+    this.firebaseService.addRequest(formData).then((result) => {
+      this.route.navigate(['/user/profile']);
+    });
   }
 }

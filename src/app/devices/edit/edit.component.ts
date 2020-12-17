@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import firebase from 'firebase/app';
 import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IDeviceData } from 'src/app/shared/interfaces/device';
+import { IServices } from 'src/app/shared/interfaces/service';
 
 @Component({
   selector: 'app-edit',
@@ -13,8 +14,8 @@ import { FirebaseService } from 'src/app/shared/firebase.service';
   styleUrls: ['../../../form-style.css', './edit.component.css'],
 })
 export class EditComponent implements OnInit {
-  deviceDetails;
-  services;
+  deviceDetails: IDeviceData;
+  services: IServices;
   selectedFile: File;
   fb;
   downloadURL: Observable<string>;
@@ -23,7 +24,6 @@ export class EditComponent implements OnInit {
   imageUrl: string;
 
   constructor(
-    private db: AngularFirestore,
     private router: Router,
     private storage: AngularFireStorage,
     private activatedRoute: ActivatedRoute,
@@ -34,12 +34,12 @@ export class EditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.deviceDetails = this.deviceDetails ? this.deviceDetails : {};
+    this.deviceDetails = this.deviceDetails ? this.deviceDetails : null;
   }
 
   getData(deviceId) {
     this.firebaseService.getDeviceDetails(deviceId).subscribe((result) => {
-      this.deviceDetails = result;
+      this.deviceDetails = result ? result : {};
       this.deviceDetails['id'] = deviceId;
       if (this.deviceDetails.linkedServices) {
         this.deviceDetails.linkedServices.forEach((element) => {

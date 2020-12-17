@@ -4,6 +4,10 @@
     display: flex;
 }
 
+.requests div {
+    width: 100%;
+}
+
 .requests ul {
     width: 100%;
 }
@@ -24,7 +28,8 @@
 }
 
 .requests ul li>div>div {
-    padding: 15px;
+    width: 94%;
+    padding: 0 3%;
 }
 
 .requests h3 {

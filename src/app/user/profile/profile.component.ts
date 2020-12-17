@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/app/shared/firebase.service';
-import { IUser } from 'src/app/shared/interfaces/user';
+import { IUserData } from 'src/app/shared/interfaces/user';
 import { IRequests } from 'src/app/shared/interfaces/requests';
 import { UserService } from '../user.service';
 
@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  currentUser: IUser;
+  currentUser: IUserData;
   requests: IRequests;
 
   constructor(

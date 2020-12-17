@@ -52,8 +52,8 @@ export class FirebaseService {
       .pipe(
         map((devices) => {
           return devices.map((device) => {
-            const data = device.payload.doc.data();
-            const id = device.payload.doc.id;
+            const data: any = device.payload.doc.data();
+            const id: string = device.payload.doc.id;
             return { id, data };
           });
         })
@@ -82,8 +82,8 @@ export class FirebaseService {
       .pipe(
         map((user) => {
           return user.map((user) => {
-            const data = user.payload.doc.data();
-            const id = user.payload.doc.id;
+            const data: any = user.payload.doc.data();
+            const id: string = user.payload.doc.id;
             return { id, data };
           });
         })

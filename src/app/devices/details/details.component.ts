@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IDeviceData } from 'src/app/shared/interfaces/device';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/user/user.service';
   styleUrls: ['./details.component.css'],
 })
 export class DetailsComponent implements OnInit {
-  deviceDetails;
+  deviceDetails: IDeviceData;
 
   constructor(
     public activatedRoute: ActivatedRoute,
@@ -29,7 +30,7 @@ export class DetailsComponent implements OnInit {
 
   getData(deviceId) {
     this.firebaseService.getDeviceDetails(deviceId).subscribe((result) => {
-      this.deviceDetails = result;
+      this.deviceDetails = result ? result : {};
       this.deviceDetails['id'] = deviceId;
       if (this.deviceDetails.linkedServices) {
         this.deviceDetails.linkedServices.forEach((element) => {

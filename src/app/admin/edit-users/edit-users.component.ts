@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
 import { FirebaseService } from 'src/app/shared/firebase.service';
-import { IUser } from 'src/app/shared/interfaces/user';
+import { IUserData, IUsers } from 'src/app/shared/interfaces/user';
 import { UserService } from 'src/app/user/user.service';
 
 @Component({
@@ -11,15 +10,14 @@ import { UserService } from 'src/app/user/user.service';
   styleUrls: ['../../../form-style.css', './edit-users.component.css'],
 })
 export class EditUsersComponent implements OnInit {
-  users;
-  currentUser;
+  users: IUsers;
+  currentUser: IUserData;
 
   constructor(
-    public db: AngularFirestore,
     public userService: UserService,
     public firebaseService: FirebaseService
   ) {
-    this.users = this.getData();
+    this.getData();
   }
 
   ngOnInit(): void {}

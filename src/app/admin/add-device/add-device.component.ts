@@ -4,6 +4,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IDeviceData } from 'src/app/shared/interfaces/device';
 
 @Component({
   selector: 'app-add-device',
@@ -11,7 +12,7 @@ import { FirebaseService } from 'src/app/shared/firebase.service';
   styleUrls: ['../../../form-style.css', './add-device.component.css'],
 })
 export class AddDeviceComponent implements OnInit {
-  deviceDetails;
+  deviceDetails: IDeviceData;
   selectedFile: File = null;
   fb;
   downloadURL: Observable<string>;
@@ -26,7 +27,17 @@ export class AddDeviceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.deviceDetails = this.deviceDetails ? this.deviceDetails : {};
+    this.deviceDetails = this.deviceDetails
+      ? this.deviceDetails
+      : {
+          id: '',
+          name: '',
+          description: '',
+          imageUrl: '',
+          linkedServices: [],
+          shortDescription: '',
+          requestCounter: 0,
+        };
   }
 
   onFileSelected(event) {
@@ -71,8 +82,10 @@ export class AddDeviceComponent implements OnInit {
   }
 
   deleteImageHandler() {
-    this.deviceDetails.imageUrl = this.firebaseService.deleteImage(
-      this.deviceDetails.imageUrl
-    );
+    this.firebaseService
+      .deleteImage(this.deviceDetails.imageUrl)
+      .subscribe((result) => {
+        this.deviceDetails.imageUrl = '';
+      });
   }
 }

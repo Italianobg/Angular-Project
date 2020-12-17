@@ -4,6 +4,7 @@ import { finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FirebaseService } from 'src/app/shared/firebase.service';
+import { IServiceData } from 'src/app/shared/interfaces/service';
 
 @Component({
   selector: 'app-add-service',
@@ -11,7 +12,7 @@ import { FirebaseService } from 'src/app/shared/firebase.service';
   styleUrls: ['../../../form-style.css', './add-service.component.css'],
 })
 export class AddServiceComponent implements OnInit {
-  serviceDetails;
+  serviceDetails: IServiceData;
   selectedFile: File = null;
   fb;
   downloadURL: Observable<string>;
@@ -26,7 +27,9 @@ export class AddServiceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.serviceDetails = this.serviceDetails ? this.serviceDetails : {};
+    this.serviceDetails = this.serviceDetails
+      ? this.serviceDetails
+      : { id: '', name: '', description: '', price: 0, imageUrl: '' };
   }
 
   onFileSelected(event) {
@@ -55,9 +58,11 @@ export class AddServiceComponent implements OnInit {
   }
 
   deleteImageHandler() {
-    this.serviceDetails.imageUrl = this.firebaseService.deleteImage(
-      this.serviceDetails.imageUrl
-    );
+    this.firebaseService
+      .deleteImage(this.serviceDetails.imageUrl)
+      .subscribe((result) => {
+        this.serviceDetails.imageUrl = '';
+      });
   }
 
   addServiceHandler(formData) {

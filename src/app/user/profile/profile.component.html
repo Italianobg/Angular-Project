@@ -19,9 +19,9 @@
         <p class="middle">No repair request are made so far!</p>
     </div>
     <div class="requests">
-        <ul>
-            <li *ngFor="let request of requests">
-                <div>
+        <div *ngIf="requests">
+            <ul>
+                <li *ngFor="let request of requests">
                     <div>
                         <h3 class="middle"> {{request.data.subject}} </h3>
                         <h5 class="middle">Device: {{request.data.device}} </h5>
@@ -31,10 +31,11 @@
                         </div>
                         <h5 class="middle">Requestor: {{request.data.name}} </h5>
                         <h5 class="middle">Status: {{request.data.status}} </h5>
+
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
         <!-- row-container -->
     </div>
 </div>

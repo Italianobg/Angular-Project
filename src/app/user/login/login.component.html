@@ -38,7 +38,7 @@
                                         <input #userPassword="ngModel" [class.input-error]="userPassword.touched && !!userPassword.errors" type="password" name="password" id="password" ngModel required minlength="6" />
                                         <p *ngIf="userPassword.touched && userPassword.errors?.required"> Password is required! </p>
                                         <p *ngIf="userPassword.touched && userPassword.errors?.minlength"> Password must be at least 6 characters! </p>
-                                        <label class="middle error">{{errorMessage}}</label>
+                                        <label class="middle">{{errorMessage}}</label>
                                         <div class='middle'>
                                             <button [disabled]="f.invalid" class="form-button" type="submit" value="Submit">Login</button>
                                         </div>

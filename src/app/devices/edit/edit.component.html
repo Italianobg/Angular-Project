@@ -16,7 +16,7 @@
     </div>
 
     <div class="main">
-        <div>
+        <div *ngIf='deviceDetails'>
             <ul>
                 <form #deviceF="ngForm" (ngSubmit)="editDeviceHandler(deviceF.value)">
                     <li class='main-form'>
@@ -49,7 +49,7 @@
                             </div>
 
                             <div *ngIf="!deviceDetails.imageUrl">
-                                <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" />
+                                <input type="file" id="file" #devicePhoto (change)="onFileSelected($event)" name="image" autocomplete="off" ngModel required/>
                             </div>
 
                             <div class='middle'>

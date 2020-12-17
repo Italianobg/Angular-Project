@@ -4,6 +4,10 @@
     display: flex;
 }
 
+.devices div {
+    width: 100%;
+}
+
 .devices ul {
     width: 100%;
 }
