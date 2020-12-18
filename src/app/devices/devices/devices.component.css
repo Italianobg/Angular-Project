@@ -10,11 +10,12 @@
 
 .devices ul {
     width: 100%;
+    padding: 0;
 }
 
 .devices ul li {
     width: 30%;
-    border-right: 2.4vw solid transparent;
+    margin: 0 1.666%;
     float: left;
     margin-bottom: 30px;
     font-family: Droid Sans, sans-serif;
